@@ -1,0 +1,20 @@
+staff_id,full_name,email,role,client_id,specialism,joined_on,left_on
+S001,Imran Doyle,imran.doyle@brightpath.example,administrator,,,2024-11-01,
+S002,Ibrahim Jansen,ibrahim.jansen@brightpath.example,administrator,,,2025-02-15,
+S003,Imran Price,imran.price@brightpath.example,administrator,,,2025-08-01,2026-03-31
+S004,Pablo Kowalski,pablo.kowalski@harbourbank.example,administrator,CL02,,2025-01-20,
+S005,Bethan Varma,bethan.varma@meridianhealth.example,administrator,CL03,,2025-04-02,
+S006,Niamh Kowalski,niamh.kowalski@brightpath.example,instructor,,Data,2024-12-01,2026-05-15
+S007,Priya Varma,priya.varma@brightpath.example,instructor,,Data,2024-12-01,
+S008,Niamh Price,niamh.price@brightpath.example,instructor,,Data,2024-12-01,
+S009,Nadia Doyle,nadia.doyle@brightpath.example,instructor,,Delivery,2024-12-01,
+S010,Kian Mackay,kian.mackay@brightpath.example,instructor,,Delivery,2024-12-01,
+S011,Leila Murphy,leila.murphy@brightpath.example,instructor,,Security,2024-12-01,
+S012,Jonas Horvat,jonas.horvat@brightpath.example,instructor,,Security,2024-12-01,
+S013,Alun Mwangi,alun.mwangi@brightpath.example,instructor,,Leadership,2024-12-01,
+S014,Petra Price,petra.price@brightpath.example,instructor,,Leadership,2024-12-01,
+S015,Omar Jansen,omar.jansen@brightpath.example,instructor,,Finance,2024-12-01,
+S016,Chiara Cameron,chiara.cameron@brightpath.example,instructor,,Finance,2024-12-01,
+S017,Haruki Abara,haruki.abara@brightpath.example,instructor,,Communication,2024-12-01,
+S018,Callum Sato,callum.sato@brightpath.example,instructor,,Communication,2024-12-01,
+S019,Anya Rossi,anya.rossi@brightpath.example,instructor,,,2025-07-01,

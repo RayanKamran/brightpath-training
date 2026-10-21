@@ -1,0 +1,8 @@
+client_id,name,industry,email_domain,contract_start,contract_end,seats
+CL01,Northwind Logistics,Logistics,northwind.example,2024-06-01,,6000
+CL02,Harbour Bank,Financial services,harbourbank.example,2024-06-01,,7000
+CL03,Meridian Health Trust,Healthcare,meridianhealth.example,2025-03-01,,5000
+CL04,Kestrel Energy,Energy,kestrel.example,2025-06-01,,3500
+CL05,Orchard Retail Group,Retail,orchardretail.example,2024-06-01,2026-06-30,3000
+CL06,Atlas Civil Engineering,Construction,atlascivil.example,2025-09-01,,2000
+CL07,Lumen Software,Technology,lumensoft.example,2026-01-01,,1500

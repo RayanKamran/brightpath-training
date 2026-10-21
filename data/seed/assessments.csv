@@ -1,0 +1,207 @@
+assessment_id,course_id,type,title,due_on,weight_pct,author_id,status,published_on
+1752,foundations-of-workplace-data-analysis-2025-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2025-10-20,10,S008,published,2025-09-14
+1753,foundations-of-workplace-data-analysis-2025-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2025-11-24,20,S008,published,2025-09-13
+1754,foundations-of-workplace-data-analysis-2025-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2026-01-26,20,S008,published,2025-09-14
+1755,foundations-of-workplace-data-analysis-2025-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2026-03-16,20,S008,published,2025-09-19
+1756,foundations-of-workplace-data-analysis-2025-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2026-05-04,30,S008,published,2025-09-08
+1757,foundations-of-workplace-data-analysis-2025-10,Final exam,Final exam — Foundations of Workplace Data Analysis,,100,S008,published,2025-09-05
+1758,foundations-of-workplace-data-analysis-2026-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2026-10-20,10,S008,published,2026-09-20
+1759,foundations-of-workplace-data-analysis-2026-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2026-11-24,20,S008,draft,
+1760,foundations-of-workplace-data-analysis-2026-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2027-01-26,20,S008,published,2026-09-26
+1761,foundations-of-workplace-data-analysis-2026-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2027-03-16,20,S008,draft,
+1762,foundations-of-workplace-data-analysis-2026-10,Assignment,Assignment — Foundations of Workplace Data Analysis,2027-05-04,30,S008,draft,
+1763,foundations-of-workplace-data-analysis-2026-10,Final exam,Final exam — Foundations of Workplace Data Analysis,,100,S008,published,2026-09-16
+14991,project-delivery-essentials-2025-02,Quiz,Quiz — Project Delivery Essentials,2025-03-27,1,S009,published,2025-01-11
+14992,project-delivery-essentials-2025-02,Quiz,Quiz — Project Delivery Essentials,2025-05-01,1,S009,published,2025-01-06
+14993,project-delivery-essentials-2025-02,Quiz,Quiz — Project Delivery Essentials,2025-06-05,1,S009,published,2025-01-05
+14994,project-delivery-essentials-2025-02,Quiz,Quiz — Project Delivery Essentials,2025-07-10,1,S009,published,2025-01-05
+14995,project-delivery-essentials-2025-02,Quiz,Quiz — Project Delivery Essentials,2025-08-07,1,S009,published,2025-01-13
+14984,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-02-20,5,S009,published,2025-01-21
+14985,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-03-20,18,S009,published,2025-01-29
+14986,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-05-01,18,S009,published,2025-01-09
+14987,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-06-05,18,S009,published,2025-01-13
+14988,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-07-10,18,S009,published,2025-01-09
+14989,project-delivery-essentials-2025-02,Assignment,Assignment — Project Delivery Essentials,2025-08-07,18,S009,published,2025-01-06
+14990,project-delivery-essentials-2025-02,Final exam,Final exam — Project Delivery Essentials,,100,S009,published,2025-01-19
+15003,project-delivery-essentials-2025-10,Quiz,Quiz — Project Delivery Essentials,2025-11-24,1,S010,published,2025-09-22
+15004,project-delivery-essentials-2025-10,Quiz,Quiz — Project Delivery Essentials,2026-01-05,1,S010,published,2025-09-13
+15005,project-delivery-essentials-2025-10,Quiz,Quiz — Project Delivery Essentials,2026-02-09,1,S010,published,2025-09-06
+15006,project-delivery-essentials-2025-10,Quiz,Quiz — Project Delivery Essentials,2026-03-16,1,S010,published,2025-09-23
+15007,project-delivery-essentials-2025-10,Quiz,Quiz — Project Delivery Essentials,2026-04-27,1,S010,published,2025-09-21
+14996,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2025-10-20,5,S010,published,2025-09-05
+14997,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2025-11-17,18,S010,published,2025-09-10
+14998,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2026-01-05,18,S010,published,2025-09-12
+14999,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2026-02-09,18,S010,published,2025-09-22
+15000,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2026-03-16,18,S010,published,2025-09-01
+15001,project-delivery-essentials-2025-10,Assignment,Assignment — Project Delivery Essentials,2026-04-27,18,S010,published,2025-09-28
+15002,project-delivery-essentials-2025-10,Final exam,Final exam — Project Delivery Essentials,,100,S010,published,2025-09-17
+15015,project-delivery-essentials-2026-02,Quiz,Quiz — Project Delivery Essentials,2026-03-20,1,S010,published,2026-01-16
+15016,project-delivery-essentials-2026-02,Quiz,Quiz — Project Delivery Essentials,2026-04-24,1,S010,published,2026-01-12
+15017,project-delivery-essentials-2026-02,Quiz,Quiz — Project Delivery Essentials,2026-05-29,1,S010,published,2026-01-07
+15018,project-delivery-essentials-2026-02,Quiz,Quiz — Project Delivery Essentials,2026-07-03,1,S010,published,2026-01-09
+15019,project-delivery-essentials-2026-02,Quiz,Quiz — Project Delivery Essentials,2026-08-14,1,S010,published,2026-01-23
+15008,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-02-13,5,S010,published,2026-01-23
+15009,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-03-13,18,S010,published,2026-01-26
+15010,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-04-24,18,S010,published,2026-01-03
+15011,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-05-29,18,S010,published,2026-01-09
+15012,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-07-03,18,S010,published,2026-01-03
+15013,project-delivery-essentials-2026-02,Assignment,Assignment — Project Delivery Essentials,2026-08-14,18,S010,published,2026-01-15
+15014,project-delivery-essentials-2026-02,Final exam,Final exam — Project Delivery Essentials,,100,S010,published,2026-01-17
+15020,project-delivery-essentials-2026-10,Assignment,Assignment — Project Delivery Essentials,2026-10-20,0,S010,draft,
+15021,project-delivery-essentials-2026-10,Assignment,Assignment — Project Delivery Essentials,2026-11-24,10,S010,published,2026-09-01
+15022,project-delivery-essentials-2026-10,Assignment,Assignment — Project Delivery Essentials,2027-01-19,20,S010,draft,
+15023,project-delivery-essentials-2026-10,Assignment,Assignment — Project Delivery Essentials,2027-03-02,35,S010,published,2026-09-26
+15024,project-delivery-essentials-2026-10,Assignment,Assignment — Project Delivery Essentials,2027-04-20,35,S010,published,2026-09-14
+15025,project-delivery-essentials-2026-10,Final exam,Final exam — Project Delivery Essentials,,100,S010,published,2026-09-22
+24286,cyber-security-awareness-2026-02,Quiz,Quiz — Cyber Security Awareness,2026-02-19,2,S012,published,2026-01-20
+24287,cyber-security-awareness-2026-02,Quiz,Quiz — Cyber Security Awareness,2026-04-09,7,S012,published,2026-01-14
+24288,cyber-security-awareness-2026-02,Quiz,Quiz — Cyber Security Awareness,2026-06-18,8,S012,published,2026-01-04
+24289,cyber-security-awareness-2026-02,Quiz,Quiz — Cyber Security Awareness,2026-08-27,8,S012,published,2026-01-19
+24282,cyber-security-awareness-2026-02,Assignment,Assignment — Cyber Security Awareness,2026-03-05,9,S012,published,2026-01-21
+24283,cyber-security-awareness-2026-02,Assignment,Assignment — Cyber Security Awareness,2026-05-14,22,S012,published,2026-01-08
+24284,cyber-security-awareness-2026-02,Assignment,Assignment — Cyber Security Awareness,2026-07-02,22,S012,published,2026-01-26
+24285,cyber-security-awareness-2026-02,Assignment,Assignment — Cyber Security Awareness,2026-08-20,22,S012,published,2026-01-05
+24290,cyber-security-awareness-2026-02,Final exam,Final exam — Cyber Security Awareness,,100,S012,published,2026-01-28
+40087,cyber-security-awareness-2026-02,Final exam,Final exam — Cyber Security Awareness,,100,S012,published,2026-01-18
+24295,cyber-security-awareness-2026-10,Quiz,Quiz — Cyber Security Awareness,2026-10-19,2,,published,2026-09-06
+24296,cyber-security-awareness-2026-10,Quiz,Quiz — Cyber Security Awareness,2026-12-07,7,,published,2026-09-14
+24297,cyber-security-awareness-2026-10,Quiz,Quiz — Cyber Security Awareness,2027-02-22,8,,published,2026-09-11
+24298,cyber-security-awareness-2026-10,Quiz,Quiz — Cyber Security Awareness,2027-05-03,8,,published,2026-09-27
+24291,cyber-security-awareness-2026-10,Assignment,Assignment — Cyber Security Awareness,2026-11-02,9,,draft,
+24292,cyber-security-awareness-2026-10,Assignment,Assignment — Cyber Security Awareness,2027-01-18,22,,published,2026-09-05
+24293,cyber-security-awareness-2026-10,Assignment,Assignment — Cyber Security Awareness,2027-03-08,22,,draft,
+24294,cyber-security-awareness-2026-10,Assignment,Assignment — Cyber Security Awareness,2027-04-26,22,,draft,
+24299,cyber-security-awareness-2026-10,Final exam,Final exam — Cyber Security Awareness,,100,,published,2026-09-03
+40088,cyber-security-awareness-2026-10,Final exam,Final exam — Cyber Security Awareness,,100,,published,2026-09-23
+25341,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-02-24,2,S007,published,2025-01-10
+25342,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-03-24,3,S007,published,2025-01-17
+25343,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-04-21,3,S007,published,2025-01-03
+25344,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-05-26,4,S007,published,2025-01-16
+25345,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-06-30,4,S007,published,2025-01-28
+25346,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-07-21,3,S007,published,2025-01-24
+25347,statistics-for-decision-makers-2025-02,Quiz,Quiz — Statistics for Decision Makers,2025-08-26,6,S007,published,2025-01-03
+25334,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-02-26,7.5,S007,published,2025-01-10
+25335,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-03-26,10,S007,published,2025-01-11
+25336,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-04-23,12.5,S007,published,2025-01-25
+25337,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-05-28,15,S007,published,2025-01-08
+25338,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-07-02,15,S007,published,2025-01-25
+25339,statistics-for-decision-makers-2025-02,Assignment,Assignment — Statistics for Decision Makers,2025-08-20,15,S007,published,2025-01-24
+25340,statistics-for-decision-makers-2025-02,Final exam,Final exam — Statistics for Decision Makers,2025-09-29,100,S007,published,2025-01-20
+25348,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2025-10-26,10,S006,published,2025-09-21
+25349,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2025-11-23,12.5,S006,published,2025-09-02
+25350,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2025-12-28,17.5,S006,published,2025-09-17
+25351,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2026-02-01,20,S006,published,2025-09-13
+25352,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2026-03-15,20,S006,published,2025-09-15
+25353,statistics-for-decision-makers-2025-10,Assignment,Assignment — Statistics for Decision Makers,2026-04-26,20,S006,published,2025-09-20
+25354,statistics-for-decision-makers-2025-10,Final exam,Final exam — Statistics for Decision Makers,2026-06-19,100,S006,published,2025-09-17
+25355,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-02-26,10,S007,published,2026-01-16
+25356,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-03-26,12.5,S007,published,2026-01-24
+25357,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-04-16,17.5,S007,published,2026-01-19
+25358,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-05-28,20,S007,published,2026-01-21
+25359,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-07-09,20,S007,published,2026-01-15
+25360,statistics-for-decision-makers-2026-02,Assignment,Assignment — Statistics for Decision Makers,2026-08-20,20,S007,published,2026-01-18
+25361,statistics-for-decision-makers-2026-02,Final exam,Final exam — Statistics for Decision Makers,2026-09-30,100,S007,published,2026-01-24
+25362,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2026-10-21,5,S008,published,2026-09-11
+25363,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2026-11-11,10,S008,published,2026-09-11
+25364,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2026-12-02,10,S008,published,2026-09-09
+25365,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2027-01-20,25,S008,published,2026-09-24
+25366,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2027-02-24,25,S008,draft,
+25367,statistics-for-decision-makers-2026-10,Assignment,Assignment — Statistics for Decision Makers,2027-04-14,25,S008,draft,
+25368,statistics-for-decision-makers-2026-10,Final exam,Final exam — Statistics for Decision Makers,,100,S008,published,2026-09-27
+30709,introduction-to-systems-thinking-2025-10,Assignment,Assignment — Introduction to Systems Thinking,2025-11-03,16,S014,published,2025-09-25
+30710,introduction-to-systems-thinking-2025-10,Assignment,Assignment — Introduction to Systems Thinking,2025-12-08,28,S014,published,2025-09-17
+30711,introduction-to-systems-thinking-2025-10,Assignment,Assignment — Introduction to Systems Thinking,2026-02-02,28,S014,published,2025-09-04
+30712,introduction-to-systems-thinking-2025-10,Assignment,Assignment — Introduction to Systems Thinking,2026-03-09,28,S014,published,2025-09-01
+30713,introduction-to-systems-thinking-2025-10,Final exam,Final exam — Introduction to Systems Thinking,2026-05-24,100,S014,published,2025-09-03
+30714,introduction-to-systems-thinking-2026-02,Assignment,Assignment — Introduction to Systems Thinking,2026-03-06,16,S014,published,2026-01-04
+30715,introduction-to-systems-thinking-2026-02,Assignment,Assignment — Introduction to Systems Thinking,2026-04-10,28,S014,published,2026-01-10
+30716,introduction-to-systems-thinking-2026-02,Assignment,Assignment — Introduction to Systems Thinking,2026-05-29,28,S014,published,2026-01-16
+30717,introduction-to-systems-thinking-2026-02,Assignment,Assignment — Introduction to Systems Thinking,2026-07-03,28,S014,published,2026-01-14
+30718,introduction-to-systems-thinking-2026-02,Final exam,Final exam — Introduction to Systems Thinking,2026-09-17,100,S014,published,2026-01-26
+30719,introduction-to-systems-thinking-2026-10,Assignment,Assignment — Introduction to Systems Thinking,2026-11-03,16,S014,published,2026-09-05
+30720,introduction-to-systems-thinking-2026-10,Assignment,Assignment — Introduction to Systems Thinking,2026-12-08,28,S014,draft,
+30721,introduction-to-systems-thinking-2026-10,Assignment,Assignment — Introduction to Systems Thinking,2027-02-09,28,S014,published,2026-09-17
+30722,introduction-to-systems-thinking-2026-10,Assignment,Assignment — Introduction to Systems Thinking,2027-03-16,28,S014,published,2026-09-14
+30723,introduction-to-systems-thinking-2026-10,Final exam,Final exam — Introduction to Systems Thinking,2027-05-24,100,S014,published,2026-09-16
+34865,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-07
+34866,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-15
+34867,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-06
+34868,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-09
+34869,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-02
+34871,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-24
+34870,financial-literacy-for-managers-2025-02,Quiz,Quiz — Financial Literacy for Managers,2025-09-11,0,S015,published,2025-01-27
+34860,financial-literacy-for-managers-2025-02,Assignment,Assignment — Financial Literacy for Managers,2025-02-20,12.5,S015,published,2025-01-09
+34861,financial-literacy-for-managers-2025-02,Assignment,Assignment — Financial Literacy for Managers,2025-03-20,12.5,S015,published,2025-01-05
+34862,financial-literacy-for-managers-2025-02,Assignment,Assignment — Financial Literacy for Managers,2025-05-01,25,S015,published,2025-01-10
+34863,financial-literacy-for-managers-2025-02,Assignment,Assignment — Financial Literacy for Managers,2025-06-12,25,S015,published,2025-01-24
+34864,financial-literacy-for-managers-2025-02,Assignment,Assignment — Financial Literacy for Managers,2025-07-17,25,S015,published,2025-01-23
+34872,financial-literacy-for-managers-2025-02,Final exam,Final exam — Financial Literacy for Managers,2025-09-11,100,S015,published,2025-01-25
+34878,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-17
+34879,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-22
+34880,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-03
+34881,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-15
+34882,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-14
+34884,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-06
+34883,financial-literacy-for-managers-2025-10,Quiz,Quiz — Financial Literacy for Managers,2026-05-25,0,S015,published,2025-09-15
+34873,financial-literacy-for-managers-2025-10,Assignment,Assignment — Financial Literacy for Managers,2025-10-20,12.5,S015,published,2025-09-28
+34874,financial-literacy-for-managers-2025-10,Assignment,Assignment — Financial Literacy for Managers,2025-11-17,12.5,S015,published,2025-09-26
+34875,financial-literacy-for-managers-2025-10,Assignment,Assignment — Financial Literacy for Managers,2026-01-05,25,S015,published,2025-09-13
+34876,financial-literacy-for-managers-2025-10,Assignment,Assignment — Financial Literacy for Managers,2026-02-09,25,S015,published,2025-09-09
+34877,financial-literacy-for-managers-2025-10,Assignment,Assignment — Financial Literacy for Managers,2026-03-23,25,S015,published,2025-09-28
+34885,financial-literacy-for-managers-2025-10,Final exam,Final exam — Financial Literacy for Managers,2026-05-25,100,S015,published,2025-09-27
+34891,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-20
+34892,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-26
+34893,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-28
+34894,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-18
+34895,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-03
+34897,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-09
+34896,financial-literacy-for-managers-2026-02,Quiz,Quiz — Financial Literacy for Managers,2026-09-16,0,S015,published,2026-01-20
+34886,financial-literacy-for-managers-2026-02,Assignment,Assignment — Financial Literacy for Managers,2026-02-25,12.5,S015,published,2026-01-07
+34887,financial-literacy-for-managers-2026-02,Assignment,Assignment — Financial Literacy for Managers,2026-03-25,12.5,S015,published,2026-01-10
+34888,financial-literacy-for-managers-2026-02,Assignment,Assignment — Financial Literacy for Managers,2026-04-29,25,S015,published,2026-01-28
+34889,financial-literacy-for-managers-2026-02,Assignment,Assignment — Financial Literacy for Managers,2026-06-10,25,S015,published,2026-01-28
+34890,financial-literacy-for-managers-2026-02,Assignment,Assignment — Financial Literacy for Managers,2026-07-22,25,S015,published,2026-01-17
+34898,financial-literacy-for-managers-2026-02,Final exam,Final exam — Financial Literacy for Managers,2026-09-16,100,S015,published,2026-01-13
+34904,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,draft,
+34905,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,published,2026-09-26
+34906,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,draft,
+34907,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,published,2026-09-13
+34908,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,published,2026-09-17
+34910,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,draft,
+34909,financial-literacy-for-managers-2026-10,Quiz,Quiz — Financial Literacy for Managers,2027-05-30,0,S015,draft,
+34899,financial-literacy-for-managers-2026-10,Assignment,Assignment — Financial Literacy for Managers,2026-10-25,12.5,S015,draft,
+34900,financial-literacy-for-managers-2026-10,Assignment,Assignment — Financial Literacy for Managers,2026-11-22,12.5,S015,published,2026-09-21
+34901,financial-literacy-for-managers-2026-10,Assignment,Assignment — Financial Literacy for Managers,2027-01-03,25,S015,draft,
+34902,financial-literacy-for-managers-2026-10,Assignment,Assignment — Financial Literacy for Managers,2027-02-14,25,S015,draft,
+34903,financial-literacy-for-managers-2026-10,Assignment,Assignment — Financial Literacy for Managers,2027-04-18,25,S015,published,2026-09-17
+34911,financial-literacy-for-managers-2026-10,Final exam,Final exam — Financial Literacy for Managers,2027-05-30,100,S015,published,2026-09-11
+37418,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-07
+37419,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-01
+37420,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-18
+37421,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-12
+37422,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-12
+37423,effective-technical-writing-2025-10,Quiz,Quiz — Effective Technical Writing,2026-05-18,0,S018,published,2025-09-06
+37415,effective-technical-writing-2025-10,Assignment,Assignment — Effective Technical Writing,2025-12-01,0,S018,published,2025-09-06
+37416,effective-technical-writing-2025-10,Assignment,Assignment — Effective Technical Writing,2026-02-02,0,S018,published,2025-09-07
+37417,effective-technical-writing-2025-10,Assignment,Assignment — Effective Technical Writing,2026-03-23,0,S018,published,2025-09-09
+37424,effective-technical-writing-2025-10,Final exam,Final exam — Effective Technical Writing,2026-05-18,100,S018,published,2025-09-10
+37428,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-25
+37429,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-20
+37430,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-08
+37431,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-07
+37432,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-08
+37433,effective-technical-writing-2026-02,Quiz,Quiz — Effective Technical Writing,2026-09-11,0,S018,published,2026-01-29
+37425,effective-technical-writing-2026-02,Assignment,Assignment — Effective Technical Writing,2026-04-03,0,S018,published,2026-01-20
+37426,effective-technical-writing-2026-02,Assignment,Assignment — Effective Technical Writing,2026-05-29,0,S018,published,2026-01-14
+37427,effective-technical-writing-2026-02,Assignment,Assignment — Effective Technical Writing,2026-07-17,0,S018,published,2026-01-10
+37434,effective-technical-writing-2026-02,Final exam,Final exam — Effective Technical Writing,2026-09-11,100,S018,published,2026-01-26
+37438,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,draft,
+37439,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,published,2026-09-27
+37440,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,published,2026-09-25
+37441,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,draft,
+37442,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,published,2026-09-16
+37443,effective-technical-writing-2026-10,Quiz,Quiz — Effective Technical Writing,2027-05-18,0,S017,draft,
+37435,effective-technical-writing-2026-10,Assignment,Assignment — Effective Technical Writing,2026-12-01,0,S017,draft,
+37436,effective-technical-writing-2026-10,Assignment,Assignment — Effective Technical Writing,2027-02-02,0,S017,published,2026-09-15
+37437,effective-technical-writing-2026-10,Assignment,Assignment — Effective Technical Writing,2027-03-23,0,S017,draft,
+37444,effective-technical-writing-2026-10,Final exam,Final exam — Effective Technical Writing,2027-05-18,100,S017,draft,
