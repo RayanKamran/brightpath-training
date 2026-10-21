@@ -39,6 +39,9 @@ def connect(db_path):
     db.execute("CREATE TABLE IF NOT EXISTS page_files (id INTEGER PRIMARY KEY, page_id INTEGER NOT NULL, "
                "kind TEXT NOT NULL, original_name TEXT NOT NULL, stored_name TEXT NOT NULL, size INTEGER NOT NULL, "
                "uploaded_by TEXT, uploaded_at TEXT, removed_by TEXT, removed_at TEXT)")
+    # Who withdrew a learner; enrolments.csv has no such column, so imported withdrawals have no row here.
+    db.execute("CREATE TABLE IF NOT EXISTS withdrawals (enrolment_id TEXT PRIMARY KEY, withdrawn_by TEXT NOT NULL, "
+               "withdrawn_at TEXT NOT NULL)")
     return db
 
 

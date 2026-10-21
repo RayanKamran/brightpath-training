@@ -39,6 +39,24 @@
     {% endif %}
   </form>
 
+  <h2>Enrolments</h2>
+  {% if runs %}
+  {% with withdraw_as = "admin" %}{% include "_runs.html" %}{% endwith %}
+  {% else %}
+  <p>No enrolments.</p>
+  {% endif %}
+  {% if learner.account_status == "active" and open_cohorts %}
+  <form method="post" action="{{ url_for('enrolment.admin_enrol', learner_id=learner.learner_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Enrol in
+      <select name="course_id">
+        {% for c in open_cohorts %}<option value="{{ c.course_id }}">{{ c.title }} — {{ c.cohort }}</option>{% endfor %}
+      </select>
+    </label>
+    <button type="submit">Enrol</button>
+  </form>
+  {% endif %}
+
   <h2>History</h2>
   {% if history %}
   <table>

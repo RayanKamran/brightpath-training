@@ -5,6 +5,7 @@ from flask import Flask, abort, flash, g, redirect, render_template, request, se
 
 import auth
 import courses
+import enrolment
 import importer
 import people
 
@@ -29,6 +30,7 @@ app.before_request(auth.load_signed_in_user)
 app.jinja_env.globals["csrf_token"] = auth.csrf_token
 app.register_blueprint(people.bp)
 app.register_blueprint(courses.bp)
+app.register_blueprint(enrolment.bp)
 
 
 @app.teardown_appcontext
@@ -109,8 +111,5 @@ def instructor_home():
 @app.route("/learner")
 @auth.role_required("learner")
 def learner_home():
-    enrolments = auth.get_db().execute(
-        "SELECT c.course_id, c.title, c.cohort, e.outcome, COALESCE(s.status, 'published') AS status "
-        "FROM enrolments e JOIN courses c USING (course_id) LEFT JOIN course_status s USING (course_id) "
-        "WHERE e.learner_id = ? ORDER BY c.starts_on, c.title", (g.user["id"],)).fetchall()
-    return render_template("home_learner.html", enrolments=enrolments)
+    runs = enrolment.runs(auth.get_db(), "e.learner_id = :me", me=g.user["id"])
+    return render_template("home_learner.html", runs=runs)

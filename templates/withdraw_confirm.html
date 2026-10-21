@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Withdraw — BrightPath{% endblock %}
+{% block content %}
+  <h1>Withdraw</h1>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p>Withdraw from {{ run.title }} — {{ run.cohort }}? You'll lose access to its pages and quizzes.</p>
+    <button type="submit">Withdraw</button>
+    <a href="{{ url_for('learner_home') }}">Cancel</a>
+  </form>
+{% endblock %}

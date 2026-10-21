@@ -1,0 +1,36 @@
+{# Enrolment runs. Set: show_learner (roster), link_learn (learner's own page), withdraw_as ('self', 'admin' or none). #}
+<table>
+  <thead><tr>
+    {% if show_learner %}<th scope="col">Learner</th>{% endif %}
+    <th scope="col">Course</th><th scope="col">Attempt</th><th scope="col">Enrolled</th>
+    <th scope="col">Outcome</th><th scope="col">Withdrawal</th>{% if withdraw_as %}<th scope="col"></th>{% endif %}
+  </tr></thead>
+  <tbody>
+    {% for r in runs %}
+    <tr>
+      {% if show_learner %}<td>{{ r.learner_name }}</td>{% endif %}
+      <td>
+        {% if link_learn and r.cohort_status == "published" and not r.withdrawn %}
+        <a href="{{ url_for('courses.learn_cohort', course_id=r.course_id) }}">{{ r.title }} — {{ r.cohort }}</a>
+        {% else %}{{ r.title }} — {{ r.cohort }}{% endif %}
+      </td>
+      <td>Attempt {{ (r.previous_attempts or 0) + 1 }}</td>
+      <td>Enrolled {{ r.enrolled_on or "" }} by {{ r.enrolled_by_name }}</td>
+      <td>{{ r.outcome }}</td>
+      <td>{% if r.withdrawn %}Withdrawn{% if r.withdrawn_on %} {{ r.withdrawn_on }}{% endif %} by {{ r.withdrawn_by_name }}{% endif %}</td>
+      {% if withdraw_as %}
+      <td>
+        {% if r.active and withdraw_as == "self" %}
+        <a href="{{ url_for('enrolment.self_withdraw', enrolment_id=r.enrolment_id) }}">Withdraw</a>
+        {% elif r.active %}
+        <form method="post" action="{{ url_for('enrolment.admin_withdraw', enrolment_id=r.enrolment_id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit">Withdraw</button>
+        </form>
+        {% endif %}
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

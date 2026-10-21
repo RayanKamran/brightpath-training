@@ -21,6 +21,16 @@ FILE_TYPES = {
 }
 
 
+# Either field marks a withdrawal: some imported rows have only one of them.
+WITHDRAWN = "(e.outcome = 'Withdrawn' OR e.withdrawn_on IS NOT NULL)"
+
+
+def can_read(db, learner_id, course_id):
+    """Is the learner enrolled on the cohort and not withdrawn?"""
+    return db.execute(f"SELECT 1 FROM enrolments e WHERE e.learner_id = ? AND e.course_id = ? AND NOT {WITHDRAWN}",
+                      (learner_id, course_id)).fetchone() is not None
+
+
 def now():
     return datetime.now().isoformat(" ", "minutes")
 
@@ -52,11 +62,10 @@ def teaching_page(course_id, page_id):
 
 
 def learning_cohort(course_id):
-    """The cohort, if it is published and the signed-in learner is enrolled on it (404 otherwise)."""
+    """The cohort, if it is published and the signed-in learner is enrolled and not withdrawn (404 otherwise)."""
     db = auth.get_db()
     cohort = cohort_row(db, course_id)
-    if cohort is None or cohort["status"] != "published" or not db.execute(
-            "SELECT 1 FROM enrolments WHERE learner_id = ? AND course_id = ?", (g.user["id"], course_id)).fetchone():
+    if cohort is None or cohort["status"] != "published" or not can_read(db, g.user["id"], course_id):
         abort(404)
     return cohort
 
@@ -300,9 +309,8 @@ def file(file_id):
         allowed = auth.teaches(db, g.user["id"], f["course_id"])
     else:
         cohort = cohort_row(db, f["course_id"])
-        allowed = f["page_status"] == "published" and cohort["status"] == "published" and db.execute(
-            "SELECT 1 FROM enrolments WHERE learner_id = ? AND course_id = ?",
-            (g.user["id"], f["course_id"])).fetchone() is not None
+        allowed = (f["page_status"] == "published" and cohort["status"] == "published"
+                   and can_read(db, g.user["id"], f["course_id"]))
     if not allowed:
         abort(404)
     ext = f["stored_name"].rsplit(".", 1)[-1]

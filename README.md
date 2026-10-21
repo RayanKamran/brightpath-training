@@ -43,6 +43,11 @@ Instructors build pages (text, images, PDFs) in the cohorts they teach at
 until published. Learners read published pages of their cohorts at
 `/learn/<cohort>`. Uploaded files are kept in `instance/uploads/`.
 
+Learners enrol themselves at `/courses` (published cohorts that haven't ended)
+and can withdraw from their home page; administrators enrol and withdraw
+learners from the learner's page. Withdrawing keeps the record but ends access
+to the cohort's pages. Every run shows who enrolled and who withdrew the learner.
+
 ## Import only
 
 ```

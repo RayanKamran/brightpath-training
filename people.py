@@ -6,6 +6,7 @@ from flask import Blueprint, abort, flash, g, redirect, render_template, request
 from werkzeug.security import generate_password_hash
 
 import auth
+import enrolment
 
 bp = Blueprint("people", __name__, url_prefix="/admin")
 PAGE_SIZE = 50
@@ -152,6 +153,8 @@ def learner(learner_id):
                          "LEFT JOIN staff s ON s.staff_id = h.changed_by WHERE h.learner_id = ? "
                          "ORDER BY h.id DESC", (learner_id,)).fetchall()
     return render_template("learner.html", learner=row, history=history, departments=departments(db),
+                           runs=enrolment.runs(db, "e.learner_id = :id", id=learner_id),
+                           open_cohorts=enrolment.open_cohorts(db),
                            **({"clients": None} if auth.client_scope() else client_choices(db)))
 
 

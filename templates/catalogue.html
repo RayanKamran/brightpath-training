@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Courses — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('learner_home') }}">Your courses</a></p>
+  <h1>Courses open for enrolment</h1>
+  {% if cohorts %}
+  <table>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Runs</th><th scope="col"></th></tr></thead>
+    <tbody>
+      {% for c in cohorts %}
+      <tr>
+        <td>{{ c.title }}</td><td>{{ c.cohort }}</td><td>{{ c.starts_on }} to {{ c.ends_on }}</td>
+        <td>
+          {% if c.course_id in enrolled %}You have an enrolment on this cohort
+          {% elif c.title in taking %}You're taking the {{ taking[c.title] }} cohort
+          {% else %}
+          <form method="post" action="{{ url_for('enrolment.self_enrol', course_id=c.course_id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Enrol</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No cohorts are open for enrolment right now.</p>
+  {% endif %}
+{% endblock %}

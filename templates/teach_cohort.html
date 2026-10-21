@@ -2,7 +2,8 @@
 {% block title %}{{ cohort.title }} {{ cohort.cohort }} — BrightPath{% endblock %}
 {% block content %}
   <h1>{{ cohort.title }} — {{ cohort.cohort }}</h1>
-  <p>{{ cohort.starts_on }} to {{ cohort.ends_on }} · {{ "{:,}".format(cohort.enrolled) }} enrolments ·
+  <p>{{ cohort.starts_on }} to {{ cohort.ends_on }} ·
+    <a href="{{ url_for('enrolment.roster', course_id=cohort.course_id) }}">{{ "{:,}".format(cohort.enrolled) }} enrolments</a> ·
     Cohort is <strong>{{ cohort.status }}</strong>.</p>
   <form method="post" action="{{ url_for('courses.cohort_status', course_id=cohort.course_id) }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
