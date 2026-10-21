@@ -156,7 +156,8 @@ class CoursesTest(AppTestCase):
         self.assertEqual(sorted(offered), ["data-2025-10", "data-2026-02"])
         self.assertEqual(self.post("/teach/data-analysis-2027-02/copy", data={"source": "writing-2025-10"})
                          .status_code, 400)
-        self.post("/teach/data-analysis-2027-02/copy", data={"source": "data-2025-10"})
+        r = self.post("/teach/data-analysis-2027-02/copy", data={"source": "data-2025-10"}, follow_redirects=True)
+        self.assertIn("Copied 1 page as drafts.", r.text)
         self.assertEqual(self.query("SELECT title, body, status FROM pages WHERE course_id = 'data-analysis-2027-02'"),
                          [("Week 1", "Copied text", "draft")])
         self.assertEqual(len(self.query("SELECT 1 FROM page_files")), 2)

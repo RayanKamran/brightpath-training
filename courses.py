@@ -178,7 +178,7 @@ def copy_pages(course_id):
                    "SELECT ?, kind, original_name, stored_name, size, ?, ? FROM page_files "
                    "WHERE page_id = ? AND removed_at IS NULL ORDER BY id", (new_id, g.user["id"], now(), p["id"]))
     db.commit()
-    flash(f"Copied {len(pages)} pages as drafts.")
+    flash(f"Copied {len(pages)} page{'' if len(pages) == 1 else 's'} as drafts.")
     return redirect(url_for("courses.cohort", course_id=course_id))
 
 
