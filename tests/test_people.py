@@ -236,6 +236,19 @@ class PeopleTest(AppTestCase):
                       data={"staff_id": "S010", "role": "co-instructor", "on": "2025-11-01"})
         self.assertEqual(r.status_code, 403)
 
+    def test_staff_who_left_are_marked_not_hidden(self):
+        with closing(sqlite3.connect(self.db)) as db:  # an open row for someone who has left, as in the real data
+            db.execute("INSERT INTO course_staff (course_id, staff_id, role, assigned_on) "
+                       "VALUES ('data-2025-10', 'S006', 'co-instructor', '2025-10-01')")
+            db.commit()
+        self.sign_in(ADMIN)
+        for path in ["/admin/cohorts", "/admin/cohorts/data-2025-10"]:
+            with self.subTest(path=path):
+                page = self.client.get(path).text
+                self.assertIn("Niamh Kowalski (left 2020-05-15)", page)
+                self.assertNotIn("Ana Grey (left", page)
+        self.assertEqual(self.query("SELECT unassigned_on FROM course_staff WHERE staff_id = 'S006'"), [(None,)])
+
     def test_cohort_list_shows_nobody_assigned(self):
         self.sign_in(ADMIN)
         self.post("/admin/cohorts/data-2025-10/unassign",

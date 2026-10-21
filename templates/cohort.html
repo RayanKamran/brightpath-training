@@ -25,7 +25,7 @@
     <tbody>
       {% for r in rows %}
       <tr>
-        <td>{{ r.full_name }}</td><td>{{ r.role }}</td><td>{{ r.assigned_on }}</td>
+        <td>{{ r.full_name }}{{ left_mark(r.left_on) }}</td><td>{{ r.role }}</td><td>{{ r.assigned_on }}</td>
         <td>{{ r.unassigned_on or "now" }}</td>
         <td>
           {% if not r.unassigned_on %}

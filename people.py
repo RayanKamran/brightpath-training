@@ -213,6 +213,11 @@ def learner_status(learner_id):
 
 # --- instructors on cohorts (BrightPath administrators only) ------------------------------
 
+def left_mark(left_on):
+    """' (left <date>)' for staff whose leaving date has passed; they stay listed, just marked."""
+    return f" (left {left_on})" if left_on and left_on < today() else ""
+
+
 def current_instructors(db):
     return db.execute("SELECT staff_id, full_name FROM staff WHERE role = 'instructor' "
                       "AND (left_on IS NULL OR left_on >= ?) ORDER BY full_name", (today(),)).fetchall()
@@ -224,9 +229,9 @@ def cohorts():
     brightpath_only()
     db = auth.get_db()
     current = {}
-    for r in db.execute("SELECT cs.course_id, cs.role, s.full_name FROM course_staff cs JOIN staff s USING (staff_id) "
-                        "WHERE cs.unassigned_on IS NULL ORDER BY cs.role DESC, s.full_name"):
-        current.setdefault(r["course_id"], []).append(f"{r['full_name']} ({r['role']})")
+    for r in db.execute("SELECT cs.course_id, cs.role, s.full_name, s.left_on FROM course_staff cs "
+                        "JOIN staff s USING (staff_id) WHERE cs.unassigned_on IS NULL ORDER BY cs.role DESC, s.full_name"):
+        current.setdefault(r["course_id"], []).append(f"{r['full_name']}{left_mark(r['left_on'])} ({r['role']})")
     courses = db.execute("SELECT course_id, title, cohort FROM courses ORDER BY title, starts_on").fetchall()
     return render_template("cohorts.html", courses=courses, current=current)
 
@@ -235,10 +240,10 @@ def render_cohort(db, course_id, confirm=None):
     course = db.execute("SELECT * FROM courses WHERE course_id = ?", (course_id,)).fetchone()
     if course is None:
         abort(404)
-    rows = db.execute("SELECT cs.*, s.full_name FROM course_staff cs JOIN staff s USING (staff_id) "
+    rows = db.execute("SELECT cs.*, s.full_name, s.left_on FROM course_staff cs JOIN staff s USING (staff_id) "
                       "WHERE cs.course_id = ? ORDER BY cs.assigned_on DESC, cs.role", (course_id,)).fetchall()
     return render_template("cohort.html", course=course, rows=rows, instructors=current_instructors(db),
-                           roles=ROLES, today=today(), confirm=confirm)
+                           roles=ROLES, today=today(), confirm=confirm, left_mark=left_mark)
 
 
 @bp.route("/cohorts/<course_id>")
