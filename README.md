@@ -32,6 +32,12 @@ passed, cannot sign in. Each role has its own home page (`/admin`,
 `/instructor`, `/learner`); other roles' pages are refused by the server.
 BrightPath administrators can see table row counts at `/admin/data`.
 
+Administrators manage learners at `/admin/learners` (create, place in a client
+and department, deactivate, reactivate; every change is kept in the learner's
+history). Client administrators only ever see their own client's learners.
+BrightPath administrators assign instructors to cohorts at `/admin/cohorts`.
+Nothing is ever deleted.
+
 ## Import only
 
 ```

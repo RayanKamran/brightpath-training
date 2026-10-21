@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Learners — BrightPath{% endblock %}
+{% block content %}
+  <h1>Learners</h1>
+  <p><a href="{{ url_for('people.learner_new') }}">Create a learner</a></p>
+  <form method="get">
+    <label>Search name or email <input type="search" name="q" value="{{ q }}"></label>
+    <button type="submit">Search</button>
+  </form>
+  <p>{{ "{:,}".format(total) }} learners{% if q %} matching “{{ q }}”{% endif %}.</p>
+  {% if rows %}
+  <table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Client</th>
+      <th scope="col">Department</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td><a href="{{ url_for('people.learner', learner_id=r.learner_id) }}">{{ r.full_name }}</a></td>
+        <td>{{ r.email }}</td><td>{{ r.client_name or "—" }}</td><td>{{ r.department or "—" }}</td>
+        <td>{{ r.account_status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p>
+    {% if page > 1 %}<a href="{{ url_for('people.learners', q=q, page=page - 1) }}">Previous</a>{% endif %}
+    Page {{ page }} of {{ pages }}
+    {% if page < pages %}<a href="{{ url_for('people.learners', q=q, page=page + 1) }}">Next</a>{% endif %}
+  </p>
+  {% endif %}
+{% endblock %}

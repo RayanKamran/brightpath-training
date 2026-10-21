@@ -12,11 +12,20 @@
     {% if g.user %}
     — {{ g.user.name }} ({{ g.user.role }})
     <form method="post" action="{{ url_for('signout') }}" style="display:inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit">Sign out</button>
     </form>
+    {% if g.user.role == "administrator" %}
+    <nav>
+      <a href="{{ url_for('admin_home') }}">Home</a> ·
+      <a href="{{ url_for('people.learners') }}">Learners</a>
+      {% if not g.user.client_id %} · <a href="{{ url_for('people.cohorts') }}">Cohorts</a>{% endif %}
+    </nav>
+    {% endif %}
     {% endif %}
   </header>
   <main>
+    {% for message in get_flashed_messages() %}<p role="status">{{ message }}</p>{% endfor %}
     {% block content %}{% endblock %}
   </main>
 </body>

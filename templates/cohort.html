@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} {{ course.cohort }} — BrightPath{% endblock %}
+{% block content %}
+  <h1>{{ course.title }} — {{ course.cohort }}</h1>
+  <p>{{ course.starts_on }} to {{ course.ends_on }}. <a href="{{ url_for('people.cohorts') }}">All cohorts</a></p>
+
+  {% if confirm %}
+  <form method="post" action="{{ url_for('people.assign', course_id=course.course_id) }}" role="alert">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="staff_id" value="{{ confirm.staff_id }}">
+    <input type="hidden" name="role" value="{{ confirm.role }}">
+    <input type="hidden" name="on" value="{{ confirm.on }}">
+    <input type="hidden" name="confirm" value="1">
+    <p>{{ confirm.message }}</p>
+    <button type="submit">Confirm</button>
+    <a href="{{ url_for('people.cohort', course_id=course.course_id) }}">Cancel</a>
+  </form>
+  {% endif %}
+
+  <h2>Instructors, current and past</h2>
+  {% if rows %}
+  <table>
+    <thead><tr><th scope="col">Instructor</th><th scope="col">Role</th><th scope="col">From</th>
+      <th scope="col">Until</th><th scope="col"></th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.full_name }}</td><td>{{ r.role }}</td><td>{{ r.assigned_on }}</td>
+        <td>{{ r.unassigned_on or "now" }}</td>
+        <td>
+          {% if not r.unassigned_on %}
+          <form method="post" action="{{ url_for('people.unassign', course_id=course.course_id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="staff_id" value="{{ r.staff_id }}">
+            <input type="hidden" name="assigned_on" value="{{ r.assigned_on }}">
+            <label>Take off from <input type="date" name="on" value="{{ today }}" required></label>
+            <button type="submit">Take off</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>Nobody has been assigned to this cohort.</p>
+  {% endif %}
+
+  <h2>Assign an instructor</h2>
+  <form method="post" action="{{ url_for('people.assign', course_id=course.course_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Instructor
+      <select name="staff_id" required>
+        {% for i in instructors %}<option value="{{ i.staff_id }}">{{ i.full_name }}</option>{% endfor %}
+      </select>
+    </label></p>
+    <p><label>Role
+      <select name="role">{% for role in roles %}<option>{{ role }}</option>{% endfor %}</select>
+    </label></p>
+    <p><label>From <input type="date" name="on" value="{{ today }}" required></label></p>
+    <p><button type="submit">Assign</button></p>
+  </form>
+{% endblock %}

@@ -5,6 +5,7 @@ from flask import Flask, abort, g, redirect, render_template, request, session, 
 
 import auth
 import importer
+import people
 
 HOMES = {"administrator": "admin_home", "instructor": "instructor_home", "learner": "learner_home"}
 
@@ -20,7 +21,10 @@ def secret_key():
 
 app = Flask(__name__)
 app.config.update(DB_PATH=importer.DB_PATH, SECRET_KEY=secret_key(), SESSION_COOKIE_SAMESITE="Lax")
+app.before_request(auth.check_csrf)
 app.before_request(auth.load_signed_in_user)
+app.jinja_env.globals["csrf_token"] = auth.csrf_token
+app.register_blueprint(people.bp)
 
 
 @app.teardown_appcontext

@@ -21,13 +21,16 @@ EXTRA = {
 }
 
 
-class AuthTest(unittest.TestCase):
+class AppTestCase(unittest.TestCase):
+    """Sample data imported into a temp DB, plus a test client that sends CSRF tokens."""
+    EXTRA = EXTRA
+
     def setUp(self):
         self.dir = Path(tempfile.mkdtemp())
         seed = self.dir / "seed"
         seed.mkdir()
         for name, text in SAMPLE.items():
-            (seed / name).write_text(text + EXTRA.get(name, ""), encoding="utf-8")
+            (seed / name).write_text(text + self.EXTRA.get(name, ""), encoding="utf-8")
         self.db = self.dir / "test.db"
         importer.import_all(self.db, seed)
         with closing(auth.connect(self.db)) as db:
@@ -38,8 +41,19 @@ class AuthTest(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.dir)
 
+    def post(self, path, data=None, **kwargs):
+        with self.client.session_transaction() as s:
+            token = s.setdefault("csrf", "test-token")
+        return self.client.post(path, data={**(data or {}), "csrf_token": token}, **kwargs)
+
     def sign_in(self, email, password="brightpath"):
-        return self.client.post("/signin", data={"email": email, "password": password}, follow_redirects=True)
+        return self.post("/signin", data={"email": email, "password": password}, follow_redirects=True)
+
+    def sign_out(self):
+        self.post("/signout")
+
+
+class AuthTest(AppTestCase):
 
     def test_each_role_lands_on_its_own_home(self):
         cases = [
@@ -53,7 +67,7 @@ class AuthTest(unittest.TestCase):
                 self.assertEqual(r.request.path, home)
                 for text in texts:
                     self.assertIn(text, r.text)
-                self.client.post("/signout")
+                self.sign_out()
 
     def test_instructor_sees_only_current_assignments(self):
         r = self.sign_in("ana.grey@brightpath.example")
@@ -83,7 +97,7 @@ class AuthTest(unittest.TestCase):
             for path in refused:
                 with self.subTest(email=email, path=path):
                     self.assertEqual(self.client.get(path).status_code, 403)
-            self.client.post("/signout")
+            self.sign_out()
 
     def test_signed_out_is_sent_to_sign_in(self):
         for path in ["/", "/admin", "/instructor", "/learner", "/admin/data"]:
@@ -97,7 +111,7 @@ class AuthTest(unittest.TestCase):
         self.assertIn("Northwind Logistics", r.text)
         self.assertIn("2 learners", r.text)
         self.assertEqual(self.client.get("/admin/data").status_code, 403)
-        self.client.post("/signout")
+        self.sign_out()
         self.sign_in("imran.doyle@brightpath.example")
         self.assertEqual(self.client.get("/admin/data").status_code, 200)
 
@@ -113,7 +127,7 @@ class AuthTest(unittest.TestCase):
 
     def test_sign_out(self):
         self.sign_in("ayesha@example.com")
-        self.client.post("/signout")
+        self.sign_out()
         self.assertEqual(self.client.get("/learner").status_code, 302)
 
     def test_email_is_case_insensitive(self):

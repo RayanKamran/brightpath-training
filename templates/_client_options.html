@@ -1,0 +1,7 @@
+<option value="">No client</option>
+{% for c in clients %}
+<option value="{{ c.client_id }}"{% if selected == c.client_id %} selected{% elif c.client_id in ended_ids %} disabled{% endif %}>
+  {{ c.name }} —
+  {% if c.client_id in ended_ids %}contract ended {{ c.contract_end }}{% else %}{{ "{:,}".format(c.used) }} of {{ "{:,}".format(c.seats) }} seats{% if c.used >= c.seats %} (over){% endif %}{% endif %}
+</option>
+{% endfor %}

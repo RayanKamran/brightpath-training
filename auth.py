@@ -1,9 +1,10 @@
 """Who is signed in, and what their role lets them see."""
+import secrets
 import sqlite3
 from datetime import date
 from functools import wraps
 
-from flask import abort, current_app, g, redirect, session, url_for
+from flask import abort, current_app, g, redirect, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import importer
@@ -28,6 +29,8 @@ def connect(db_path):
     db = importer.connect(db_path)
     db.row_factory = sqlite3.Row
     db.execute("CREATE TABLE IF NOT EXISTS passwords (email TEXT PRIMARY KEY, hash TEXT NOT NULL)")
+    db.execute("CREATE TABLE IF NOT EXISTS learner_history (id INTEGER PRIMARY KEY, learner_id TEXT NOT NULL, "
+               "field TEXT NOT NULL, old TEXT, new TEXT, changed_by TEXT NOT NULL, changed_at TEXT NOT NULL)")
     return db
 
 
@@ -52,10 +55,15 @@ def _find(db, where, **params):
                       dict(params, today=date.today().isoformat())).fetchone()
 
 
+def find_by_email(db, email):
+    """The staff member or learner with this email (any case), or None."""
+    return _find(db, "lower(email) = :email", email=email.strip().lower())
+
+
 def check_sign_in(db, email, password):
     """Return (user, None) on success, or (None, message to show)."""
     email = email.strip().lower()
-    user = _find(db, "lower(email) = :email", email=email)
+    user = find_by_email(db, email)
     row = user and db.execute("SELECT hash FROM passwords WHERE email = ?", (email,)).fetchone()
     if not check_password_hash(row["hash"] if row else _DUMMY_HASH, password) or not row:
         return None, WRONG
@@ -74,6 +82,21 @@ def load_signed_in_user():
             g.user = user
         else:
             session.clear()
+
+
+def csrf_token():
+    """The token every POST form must send back as csrf_token."""
+    if "csrf" not in session:
+        session["csrf"] = secrets.token_hex(16)
+    return session["csrf"]
+
+
+def check_csrf():
+    """Before every request: refuse a POST whose token doesn't match this session's."""
+    if request.method == "POST":
+        token = session.get("csrf")
+        if not token or not secrets.compare_digest(request.form.get("csrf_token", ""), token):
+            abort(400)
 
 
 def role_required(*roles):

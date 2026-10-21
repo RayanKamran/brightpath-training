@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{{ learner.full_name }} — BrightPath{% endblock %}
+{% block content %}
+  <h1>{{ learner.full_name }}</h1>
+  <dl>
+    <dt>Email</dt><dd>{{ learner.email }}</dd>
+    <dt>Client</dt><dd>{{ learner.client_name or "No client" }}</dd>
+    <dt>Department</dt><dd>{{ learner.department or "No department" }}</dd>
+    <dt>Status</dt><dd>{{ learner.account_status }}</dd>
+    <dt>Account created</dt><dd>{{ learner.account_created_on or "—" }}</dd>
+  </dl>
+
+  <h2>Placement</h2>
+  <form method="post" action="{{ url_for('people.learner_placement', learner_id=learner.learner_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if clients is not none %}
+    <p><label>Client
+      <select name="client_id">
+        {% with selected = learner.client_id %}{% include "_client_options.html" %}{% endwith %}
+      </select>
+    </label></p>
+    {% endif %}
+    <p><label>Department
+      <select name="department">
+        <option value="">No department</option>
+        {% for d in departments %}<option{% if learner.department == d %} selected{% endif %}>{{ d }}</option>{% endfor %}
+      </select>
+    </label></p>
+    <p><button type="submit">Save placement</button></p>
+  </form>
+
+  <h2>Account</h2>
+  <form method="post" action="{{ url_for('people.learner_status', learner_id=learner.learner_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if learner.account_status == "active" %}
+    <button type="submit" name="action" value="deactivate">Deactivate</button>
+    {% else %}
+    <button type="submit" name="action" value="reactivate">Reactivate</button>
+    {% endif %}
+  </form>
+
+  <h2>History</h2>
+  {% if history %}
+  <table>
+    <thead><tr><th scope="col">When</th><th scope="col">Change</th><th scope="col">By</th></tr></thead>
+    <tbody>
+      {% for h in history %}
+      <tr>
+        <td>{{ h.changed_at }}</td>
+        <td>{{ h.field }}: {% if h.old %}{{ h.old }} → {% endif %}{{ h.new }}</td>
+        <td>{{ h.by_name or h.changed_by }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No changes recorded since import.</p>
+  {% endif %}
+{% endblock %}

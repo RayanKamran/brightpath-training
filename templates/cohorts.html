@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Cohorts — BrightPath{% endblock %}
+{% block content %}
+  <h1>Cohorts</h1>
+  <table>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Teaching now</th></tr></thead>
+    <tbody>
+      {% for c in courses %}
+      <tr>
+        <td><a href="{{ url_for('people.cohort', course_id=c.course_id) }}">{{ c.title }}</a></td>
+        <td>{{ c.cohort }}</td>
+        <td>{{ current[c.course_id] | join(", ") if c.course_id in current else "nobody assigned" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
