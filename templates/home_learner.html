@@ -7,7 +7,10 @@
     <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Outcome</th></tr></thead>
     <tbody>
       {% for e in enrolments %}
-      <tr><td>{{ e.title }}</td><td>{{ e.cohort }}</td><td>{{ e.outcome }}</td></tr>
+      <tr>
+        <td>{% if e.status == "published" %}<a href="{{ url_for('courses.learn_cohort', course_id=e.course_id) }}">{{ e.title }}</a>{% else %}{{ e.title }}{% endif %}</td>
+        <td>{{ e.cohort }}</td><td>{{ e.outcome }}</td>
+      </tr>
       {% endfor %}
     </tbody>
   </table>

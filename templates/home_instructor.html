@@ -4,14 +4,16 @@
   <h2>Cohorts you teach</h2>
   {% if cohorts %}
   <table>
-    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Your role</th></tr></thead>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Your role</th><th scope="col">Status</th></tr></thead>
     <tbody>
       {% for c in cohorts %}
-      <tr><td>{{ c.title }}</td><td>{{ c.cohort }}</td><td>{{ c.role }}</td></tr>
+      <tr><td><a href="{{ url_for('courses.cohort', course_id=c.course_id) }}">{{ c.title }}</a></td>
+        <td>{{ c.cohort }}</td><td>{{ c.role }}</td><td>{{ c.status }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
   <p>You are not assigned to any cohorts right now.</p>
   {% endif %}
+  <p><a href="{{ url_for('courses.cohort_new') }}">Create a cohort</a></p>
 {% endblock %}

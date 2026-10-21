@@ -1,9 +1,10 @@
 import secrets
 from datetime import date
 
-from flask import Flask, abort, g, redirect, render_template, request, session, url_for
+from flask import Flask, abort, flash, g, redirect, render_template, request, session, url_for
 
 import auth
+import courses
 import importer
 import people
 
@@ -20,11 +21,14 @@ def secret_key():
 
 
 app = Flask(__name__)
-app.config.update(DB_PATH=importer.DB_PATH, SECRET_KEY=secret_key(), SESSION_COOKIE_SAMESITE="Lax")
+app.config.update(DB_PATH=importer.DB_PATH, UPLOAD_DIR=importer.DB_PATH.parent / "uploads",
+                  SECRET_KEY=secret_key(), SESSION_COOKIE_SAMESITE="Lax",
+                  MAX_CONTENT_LENGTH=courses.MAX_FILE_BYTES + 64 * 1024)  # one file plus the form fields
 app.before_request(auth.check_csrf)
 app.before_request(auth.load_signed_in_user)
 app.jinja_env.globals["csrf_token"] = auth.csrf_token
 app.register_blueprint(people.bp)
+app.register_blueprint(courses.bp)
 
 
 @app.teardown_appcontext
@@ -32,6 +36,12 @@ def close_db(exc):
     db = g.pop("db", None)
     if db is not None:
         db.close()
+
+
+@app.errorhandler(413)
+def too_large(exc):
+    flash(f"That file is larger than {courses.MAX_FILE_MB} MB.")
+    return redirect(request.referrer or url_for("index"))
 
 
 @app.errorhandler(403)
@@ -87,11 +97,12 @@ def admin_data():
 @app.route("/instructor")
 @auth.role_required("instructor")
 def instructor_home():
-    today = date.today().isoformat()
+    # Same rule as auth.teaches: every cohort listed here is one they can edit.
     cohorts = auth.get_db().execute(
-        "SELECT c.title, c.cohort, cs.role FROM course_staff cs JOIN courses c USING (course_id) "
-        "WHERE cs.staff_id = ? AND cs.assigned_on <= ? AND (cs.unassigned_on IS NULL OR cs.unassigned_on > ?) "
-        "ORDER BY c.starts_on, c.title", (g.user["id"], today, today)).fetchall()
+        "SELECT c.course_id, c.title, c.cohort, cs.role, COALESCE(s.status, 'published') AS status "
+        "FROM course_staff cs JOIN courses c USING (course_id) LEFT JOIN course_status s USING (course_id) "
+        "WHERE cs.staff_id = ? AND (cs.unassigned_on IS NULL OR cs.unassigned_on > ?) "
+        "ORDER BY c.starts_on, c.title", (g.user["id"], date.today().isoformat())).fetchall()
     return render_template("home_instructor.html", cohorts=cohorts)
 
 
@@ -99,6 +110,7 @@ def instructor_home():
 @auth.role_required("learner")
 def learner_home():
     enrolments = auth.get_db().execute(
-        "SELECT c.title, c.cohort, e.outcome FROM enrolments e JOIN courses c USING (course_id) "
+        "SELECT c.course_id, c.title, c.cohort, e.outcome, COALESCE(s.status, 'published') AS status "
+        "FROM enrolments e JOIN courses c USING (course_id) LEFT JOIN course_status s USING (course_id) "
         "WHERE e.learner_id = ? ORDER BY c.starts_on, c.title", (g.user["id"],)).fetchall()
     return render_template("home_learner.html", enrolments=enrolments)

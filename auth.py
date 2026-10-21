@@ -31,6 +31,14 @@ def connect(db_path):
     db.execute("CREATE TABLE IF NOT EXISTS passwords (email TEXT PRIMARY KEY, hash TEXT NOT NULL)")
     db.execute("CREATE TABLE IF NOT EXISTS learner_history (id INTEGER PRIMARY KEY, learner_id TEXT NOT NULL, "
                "field TEXT NOT NULL, old TEXT, new TEXT, changed_by TEXT NOT NULL, changed_at TEXT NOT NULL)")
+    # Only cohorts created in the app have a row; imported cohorts count as published.
+    db.execute("CREATE TABLE IF NOT EXISTS course_status (course_id TEXT PRIMARY KEY, status TEXT NOT NULL)")
+    db.execute("CREATE TABLE IF NOT EXISTS pages (id INTEGER PRIMARY KEY, course_id TEXT NOT NULL, "
+               "title TEXT NOT NULL, body TEXT NOT NULL DEFAULT '', status TEXT NOT NULL DEFAULT 'draft', "
+               "created_by TEXT, created_at TEXT, updated_by TEXT, updated_at TEXT)")
+    db.execute("CREATE TABLE IF NOT EXISTS page_files (id INTEGER PRIMARY KEY, page_id INTEGER NOT NULL, "
+               "kind TEXT NOT NULL, original_name TEXT NOT NULL, stored_name TEXT NOT NULL, size INTEGER NOT NULL, "
+               "uploaded_by TEXT, uploaded_at TEXT, removed_by TEXT, removed_at TEXT)")
     return db
 
 
@@ -82,6 +90,13 @@ def load_signed_in_user():
             g.user = user
         else:
             session.clear()
+
+
+def teaches(db, staff_id, course_id):
+    """Is this staff member currently assigned to the cohort (assignment not ended)?"""
+    return db.execute("SELECT 1 FROM course_staff WHERE staff_id = ? AND course_id = ? "
+                      "AND (unassigned_on IS NULL OR unassigned_on > ?)",
+                      (staff_id, course_id, date.today().isoformat())).fetchone() is not None
 
 
 def csrf_token():

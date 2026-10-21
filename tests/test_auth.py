@@ -35,7 +35,7 @@ class AppTestCase(unittest.TestCase):
         importer.import_all(self.db, seed)
         with closing(auth.connect(self.db)) as db:
             auth.seed_default_passwords(db)
-        app.config.update(DB_PATH=self.db, TESTING=True)
+        app.config.update(DB_PATH=self.db, UPLOAD_DIR=self.dir / "uploads", TESTING=True)
         self.client = app.test_client()
 
     def tearDown(self):

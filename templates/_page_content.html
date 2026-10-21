@@ -1,0 +1,10 @@
+<div style="white-space: pre-line">{{ page.body }}</div>
+{% for f in files if f.kind == "image" %}
+<p><img src="{{ url_for('courses.file', file_id=f.id) }}" alt="{{ f.original_name }}" style="max-width: 100%"></p>
+{% endfor %}
+{% set pdfs = files | selectattr("kind", "equalto", "pdf") | list %}
+{% if pdfs %}
+<ul>
+  {% for f in pdfs %}<li><a href="{{ url_for('courses.file', file_id=f.id) }}" target="_blank" rel="noopener">{{ f.original_name }}</a></li>{% endfor %}
+</ul>
+{% endif %}

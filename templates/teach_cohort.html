@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ cohort.title }} {{ cohort.cohort }} — BrightPath{% endblock %}
+{% block content %}
+  <h1>{{ cohort.title }} — {{ cohort.cohort }}</h1>
+  <p>{{ cohort.starts_on }} to {{ cohort.ends_on }} · {{ "{:,}".format(cohort.enrolled) }} enrolments ·
+    Cohort is <strong>{{ cohort.status }}</strong>.</p>
+  <form method="post" action="{{ url_for('courses.cohort_status', course_id=cohort.course_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if cohort.status == "draft" %}
+    <button type="submit" name="action" value="publish">Publish cohort</button>
+    {% else %}
+    <button type="submit" name="action" value="unpublish">Unpublish cohort</button>
+    {% endif %}
+  </form>
+
+  <h2>Pages</h2>
+  {% if pages %}
+  <table>
+    <thead><tr><th scope="col">Page</th><th scope="col">Status</th><th scope="col">Files</th></tr></thead>
+    <tbody>
+      {% for p in pages %}
+      <tr>
+        <td><a href="{{ url_for('courses.page_edit', course_id=cohort.course_id, page_id=p.id) }}">{{ p.title }}</a></td>
+        <td>{{ p.status }}</td><td>{{ p.files }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No pages yet.</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('courses.page_new', course_id=cohort.course_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>New page title <input name="title" required></label>
+    <button type="submit">Add page</button>
+  </form>
+
+  {% if sources %}
+  <h2>Copy pages from an earlier cohort of {{ cohort.title }}</h2>
+  <form method="post" action="{{ url_for('courses.copy_pages', course_id=cohort.course_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Cohort
+      <select name="source">{% for s in sources %}<option value="{{ s.course_id }}">{{ s.cohort }}</option>{% endfor %}</select>
+    </label>
+    <button type="submit">Copy pages as drafts</button>
+  </form>
+  {% endif %}
+{% endblock %}

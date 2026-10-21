@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('courses.cohort', course_id=cohort.course_id) }}">{{ cohort.title }} — {{ cohort.cohort }}</a></p>
+  <h1>{{ page.title }}</h1>
+  <p>Page is <strong>{{ page.status }}</strong>{% if cohort.status == "draft" %}; the cohort is still a draft{% endif %}.</p>
+  <form method="post" action="{{ url_for('courses.page_status', course_id=cohort.course_id, page_id=page.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if page.status == "draft" %}
+    <button type="submit" name="action" value="publish">Publish page</button>
+    {% else %}
+    <button type="submit" name="action" value="unpublish">Unpublish page</button>
+    {% endif %}
+  </form>
+
+  <h2>Text</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Title <input name="title" value="{{ page.title }}" required></label></p>
+    <p><label>Text<br><textarea name="body" rows="14" cols="80">{{ page.body }}</textarea></label></p>
+    <p><button type="submit">Save page</button></p>
+  </form>
+
+  <h2>Files</h2>
+  <form method="post" enctype="multipart/form-data"
+        action="{{ url_for('courses.file_upload', course_id=cohort.course_id, page_id=page.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Image or PDF (PNG, JPG, GIF, PDF; up to {{ max_mb }} MB)
+      <input type="file" name="file" accept=".png,.jpg,.jpeg,.gif,.pdf" required></label>
+    <button type="submit">Upload</button>
+  </form>
+  {% if files %}
+  <ul>
+    {% for f in files %}
+    <li>{{ f.original_name }} ({{ f.kind }}, {{ (f.size / 1024) | round(1) }} KB)
+      <form method="post" style="display:inline"
+            action="{{ url_for('courses.file_remove', course_id=cohort.course_id, page_id=page.id, file_id=f.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">Remove from page</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <h2>How learners will see it</h2>
+  <section style="border: 1px solid #999; padding: 0 1em">
+    <h3>{{ page.title }}</h3>
+    {% include "_page_content.html" %}
+  </section>
+{% endblock %}

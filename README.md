@@ -38,6 +38,11 @@ history). Client administrators only ever see their own client's learners.
 BrightPath administrators assign instructors to cohorts at `/admin/cohorts`.
 Nothing is ever deleted.
 
+Instructors build pages (text, images, PDFs) in the cohorts they teach at
+`/teach/<cohort>` and can create new cohorts; cohorts and pages stay drafts
+until published. Learners read published pages of their cohorts at
+`/learn/<cohort>`. Uploaded files are kept in `instance/uploads/`.
+
 ## Import only
 
 ```

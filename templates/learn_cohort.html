@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ cohort.title }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('learner_home') }}">Your courses</a></p>
+  <h1>{{ cohort.title }} — {{ cohort.cohort }}</h1>
+  {% if cohort.description %}<p>{{ cohort.description }}</p>{% endif %}
+  {% if pages %}
+  <ol>
+    {% for p in pages %}<li><a href="{{ url_for('courses.learn_page', course_id=cohort.course_id, page_id=p.id) }}">{{ p.title }}</a></li>{% endfor %}
+  </ol>
+  {% else %}
+  <p>No pages have been published yet.</p>
+  {% endif %}
+{% endblock %}
