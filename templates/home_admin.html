@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Welcome, {{ g.user.name }}</h1>
+  <p>Administrator for <strong>{{ client }}</strong>: {{ "{:,}".format(learners) }} learners.</p>
+{% endblock %}

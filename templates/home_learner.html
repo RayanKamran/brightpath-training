@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Welcome, {{ g.user.name }}</h1>
+  <h2>Your courses</h2>
+  {% if enrolments %}
+  <table>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Outcome</th></tr></thead>
+    <tbody>
+      {% for e in enrolments %}
+      <tr><td>{{ e.title }}</td><td>{{ e.cohort }}</td><td>{{ e.outcome }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>You are not enrolled on any courses yet.</p>
+  {% endif %}
+{% endblock %}

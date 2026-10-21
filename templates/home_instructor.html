@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Welcome, {{ g.user.name }}</h1>
+  <h2>Cohorts you teach</h2>
+  {% if cohorts %}
+  <table>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Your role</th></tr></thead>
+    <tbody>
+      {% for c in cohorts %}
+      <tr><td>{{ c.title }}</td><td>{{ c.cohort }}</td><td>{{ c.role }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>You are not assigned to any cohorts right now.</p>
+  {% endif %}
+{% endblock %}

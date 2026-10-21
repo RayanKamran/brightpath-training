@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}BrightPath{% endblock %}</title>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header>
+    <strong>BrightPath</strong>
+    {% if g.user %}
+    — {{ g.user.name }} ({{ g.user.role }})
+    <form method="post" action="{{ url_for('signout') }}" style="display:inline">
+      <button type="submit">Sign out</button>
+    </form>
+    {% endif %}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

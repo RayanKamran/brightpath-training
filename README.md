@@ -15,6 +15,23 @@ http://127.0.0.1:5000. Stop it with Ctrl+C.
 The import is insert-only: rows already in the database are left alone, so
 running it again creates no duplicates and keeps changes made in the app.
 
+## Signing in
+
+Your username is your email address. Everyone imported from the CSVs starts
+with the password **`brightpath`** (stored hashed). Example accounts:
+
+| Role | Email |
+|---|---|
+| BrightPath administrator | `imran.doyle@brightpath.example` |
+| Client administrator (Harbour Bank) | `pablo.kowalski@harbourbank.example` |
+| Instructor | `priya.varma@brightpath.example` |
+| Learner | `ayesha.farooq.391@example.com` |
+
+Learners whose account is deactivated, and staff whose `left_on` date has
+passed, cannot sign in. Each role has its own home page (`/admin`,
+`/instructor`, `/learner`); other roles' pages are refused by the server.
+BrightPath administrators can see table row counts at `/admin/data`.
+
 ## Import only
 
 ```
@@ -36,5 +53,6 @@ Wipes the database, imports everything again and starts the app.
 ## Tests
 
 ```
-python -m unittest discover tests
+.venv/Scripts/python -m unittest discover tests     (Windows)
+.venv/bin/python -m unittest discover tests         (macOS/Linux)
 ```

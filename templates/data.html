@@ -1,13 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BrightPath</title>
-  <link rel="icon" href="data:,">
-</head>
-<body>
-  <h1>BrightPath</h1>
+{% extends "base.html" %}
+{% block content %}
   <table>
     <caption>Rows in the database</caption>
     <thead><tr><th scope="col">Table</th><th scope="col">Rows</th></tr></thead>
@@ -17,5 +9,4 @@
       {% endfor %}
     </tbody>
   </table>
-</body>
-</html>
+{% endblock %}
