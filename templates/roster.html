@@ -3,6 +3,6 @@
 {% block content %}
   <p><a href="{{ url_for('courses.cohort', course_id=cohort.course_id) }}">{{ cohort.title }} — {{ cohort.cohort }}</a></p>
   <h1>Learners</h1>
-  <p>{{ "{:,}".format(rows | length) }} enrolments, withdrawn ones included.</p>
+  <p>{{ "{:,}".format(rows | length) }} enrolment{{ "" if rows | length == 1 else "s" }}, withdrawn ones included.</p>
   {% with runs = rows, show_learner = true %}{% include "_runs.html" %}{% endwith %}
 {% endblock %}

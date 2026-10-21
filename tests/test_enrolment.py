@@ -209,6 +209,11 @@ class EnrolmentTest(AppTestCase):
         self.assertEqual(self.post("/admin/enrolments/E1/withdraw").status_code, 403)
         self.assertEqual(self.post("/enrolments/E1/withdraw").status_code, 403)
         self.assertEqual(self.client.get("/teach/writing-2026-10/learners").status_code, 403)
+        self.as_user(AYESHA)
+        self.enrol("data-2026-10")
+        self.as_user(INSTRUCTOR)
+        self.assertIn("1 enrolment, withdrawn ones included.", self.client.get("/teach/data-2026-10/learners").text)
+        self.assertIn("4 enrolments, withdrawn ones included.", self.client.get("/teach/data-2025-10/learners").text)
 
 
 if __name__ == "__main__":
