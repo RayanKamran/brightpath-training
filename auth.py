@@ -42,6 +42,13 @@ def connect(db_path):
     # Who withdrew a learner; enrolments.csv has no such column, so imported withdrawals have no row here.
     db.execute("CREATE TABLE IF NOT EXISTS withdrawals (enrolment_id TEXT PRIMARY KEY, withdrawn_by TEXT NOT NULL, "
                "withdrawn_at TEXT NOT NULL)")
+    # Questions are written in the app (the CSVs hold only scores). Removing one hides it.
+    db.execute("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, assessment_id TEXT NOT NULL, "
+               "text TEXT NOT NULL, options TEXT NOT NULL, correct INTEGER NOT NULL, created_by TEXT, "
+               "updated_by TEXT, updated_at TEXT, removed_at TEXT)")
+    # What was handed in for an attempt made in the app; quiz answers are a snapshot, so edits never re-mark.
+    db.execute("CREATE TABLE IF NOT EXISTS attempt_details (attempt_id TEXT PRIMARY KEY, answers TEXT, body TEXT, "
+               "original_name TEXT, stored_name TEXT, feedback TEXT, submitted_at TEXT, marked_at TEXT)")
     return db
 
 

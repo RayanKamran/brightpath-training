@@ -11,4 +11,21 @@
   {% else %}
   <p>No pages have been published yet.</p>
   {% endif %}
+  <h2>Assessments</h2>
+  {% if assessments %}
+  <ul>
+    {% for a in assessments %}
+    <li>
+      {% if a.status == "published" %}
+      <a href="{{ url_for('assessments.take', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">{{ a.title }}</a>
+      ({{ a.type }}{% if a.due_on %}, due {{ a.due_on }}{% endif %}){% if a.best is not none %} — best score {{ a.best }}{% endif %}
+      {% else %}
+      {{ a.title }} — score {{ a.best if a.best is not none else "not marked" }} (imported)
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No assessments yet.</p>
+  {% endif %}
 {% endblock %}

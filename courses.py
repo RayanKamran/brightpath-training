@@ -82,6 +82,26 @@ def copy_sources(db, cohort):
                       "ORDER BY starts_on DESC", (cohort["title"], cohort["starts_on"])).fetchall()
 
 
+def save_upload(upload):
+    """Check an uploaded file (type, real signature, size) and store it on disk.
+    Returns ((original_name, stored_name, kind, size), None) or (None, reason)."""
+    name = Path(upload.filename).name
+    ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
+    if ext not in FILE_TYPES:
+        return None, "Only PNG, JPG, GIF and PDF files can be uploaded."
+    kind, _, signatures = FILE_TYPES[ext]
+    data = upload.read(MAX_FILE_BYTES + 1)
+    if len(data) > MAX_FILE_BYTES:
+        return None, f"That file is larger than {MAX_FILE_MB} MB."
+    if not data.startswith(signatures):
+        return None, f"{name} isn't really a {ext.upper()} file."
+    folder = Path(current_app.config["UPLOAD_DIR"])
+    folder.mkdir(parents=True, exist_ok=True)
+    stored = f"{uuid.uuid4().hex}.{ext}"
+    (folder / stored).write_bytes(data)
+    return (name, stored, kind, len(data)), None
+
+
 def valid_date(value):
     try:
         return date.fromisoformat(value).isoformat()
@@ -235,26 +255,14 @@ def file_upload(course_id, page_id):
     if not upload or not upload.filename:
         flash("Choose a file to upload.")
         return back
-    name = Path(upload.filename).name
-    ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
-    if ext not in FILE_TYPES:
-        flash("Only PNG, JPG, GIF and PDF files can be uploaded.")
+    saved, error = save_upload(upload)
+    if error:
+        flash(error)
         return back
-    kind, _, signatures = FILE_TYPES[ext]
-    data = upload.read(MAX_FILE_BYTES + 1)
-    if len(data) > MAX_FILE_BYTES:
-        flash(f"That file is larger than {MAX_FILE_MB} MB.")
-        return back
-    if not data.startswith(signatures):
-        flash(f"{name} isn't really a {ext.upper()} file.")
-        return back
-    folder = Path(current_app.config["UPLOAD_DIR"])
-    folder.mkdir(parents=True, exist_ok=True)
-    stored = f"{uuid.uuid4().hex}.{ext}"
-    (folder / stored).write_bytes(data)
+    name, stored, kind, size = saved
     db = auth.get_db()
     db.execute("INSERT INTO page_files (page_id, kind, original_name, stored_name, size, uploaded_by, uploaded_at) "
-               "VALUES (?, ?, ?, ?, ?, ?, ?)", (page_id, kind, name, stored, len(data), g.user["id"], now()))
+               "VALUES (?, ?, ?, ?, ?, ?, ?)", (page_id, kind, name, stored, size, g.user["id"], now()))
     db.commit()
     flash(f"{name} uploaded.")
     return back
@@ -278,9 +286,17 @@ def file_remove(course_id, page_id, file_id):
 @auth.role_required("learner")
 def learn_cohort(course_id):
     cohort = learning_cohort(course_id)
-    pages = auth.get_db().execute("SELECT id, title FROM pages WHERE course_id = ? AND status = 'published' "
-                                  "ORDER BY id", (course_id,)).fetchall()
-    return render_template("learn_cohort.html", cohort=cohort, pages=pages)
+    db = auth.get_db()
+    pages = db.execute("SELECT id, title FROM pages WHERE course_id = ? AND status = 'published' ORDER BY id",
+                       (course_id,)).fetchall()
+    # Published assessments, plus drafts where this learner already has (imported) scores: their history.
+    assessments = db.execute(
+        "SELECT a.assessment_id, a.title, a.type, a.due_on, a.status, COUNT(t.attempt_id) AS used, "
+        "MAX(t.score) AS best FROM assessments a LEFT JOIN attempts t "
+        "ON t.assessment_id = a.assessment_id AND t.learner_id = ? WHERE a.course_id = ? "
+        "GROUP BY a.assessment_id HAVING a.status = 'published' OR COUNT(t.attempt_id) > 0 "
+        "ORDER BY a.due_on IS NULL, a.due_on, a.title", (g.user["id"], course_id)).fetchall()
+    return render_template("learn_cohort.html", cohort=cohort, pages=pages, assessments=assessments)
 
 
 @bp.route("/learn/<course_id>/pages/<int:page_id>")

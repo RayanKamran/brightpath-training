@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ a.title }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('assessments.index', course_id=cohort.course_id) }}">Assessments — {{ cohort.title }} {{ cohort.cohort }}</a></p>
+  <h1>{{ a.title }}</h1>
+  <p>{{ a.type }} · <strong>{{ a.status }}</strong> ·
+    <a href="{{ url_for('assessments.attempts', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">Attempts</a></p>
+  <form method="post" action="{{ url_for('assessments.set_status', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if a.status == "draft" %}<button type="submit" name="action" value="publish">Publish</button>
+    {% else %}<button type="submit" name="action" value="unpublish">Unpublish</button>{% endif %}
+  </form>
+
+  <h2>Details</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Title <input name="title" value="{{ a.title }}" required></label></p>
+    <p><label>Due <input type="date" name="due_on" value="{{ a.due_on or '' }}"></label>
+      <label>Weight % <input type="number" name="weight_pct" min="0" max="100" step="0.5" value="{{ a.weight_pct }}"></label></p>
+    <p><button type="submit">Save details</button></p>
+  </form>
+
+  {% if auto %}
+  <h2>Questions</h2>
+  <p>Editing a question never changes earlier attempts; they keep the score they got.</p>
+  {% for q in questions %}
+  <form method="post" action="{{ url_for('assessments.save_question', course_id=cohort.course_id, assessment_id=a.assessment_id, question_id=q.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <fieldset>
+      <legend>Question {{ loop.index }}</legend>
+      <p><label>Question <input name="text" value="{{ q.text }}" size="60" required></label></p>
+      <p><label>Options, one per line<br><textarea name="options" rows="4" cols="40">{{ q.options | join("\n") }}</textarea></label></p>
+      <p><label>Correct option number <input type="number" name="correct" min="1" max="6" value="{{ q.correct }}" required></label>
+        <button type="submit">Save question</button>
+        <button type="submit" formaction="{{ url_for('assessments.remove_question', course_id=cohort.course_id, assessment_id=a.assessment_id, question_id=q.id) }}">Remove</button></p>
+    </fieldset>
+  </form>
+  {% else %}
+  <p>No questions yet.</p>
+  {% endfor %}
+  <form method="post" action="{{ url_for('assessments.save_question', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <fieldset>
+      <legend>Add a question</legend>
+      <p><label>Question <input name="text" size="60" required></label></p>
+      <p><label>Options, one per line (2 to 6)<br><textarea name="options" rows="4" cols="40" required></textarea></label></p>
+      <p><label>Correct option number <input type="number" name="correct" min="1" max="6" required></label>
+        <button type="submit">Add question</button></p>
+    </fieldset>
+  </form>
+  {% endif %}
+{% endblock %}

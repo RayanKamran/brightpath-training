@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ a.title }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('courses.learn_cohort', course_id=cohort.course_id) }}">{{ cohort.title }} — {{ cohort.cohort }}</a></p>
+  <h1>{{ a.title }}</h1>
+  <p>{{ a.type }}{% if a.due_on %} · due {{ a.due_on }}{% endif %} ·
+    {{ status.tries | length }} of {{ status.limit }} attempt{{ "" if status.limit == 1 else "s" }} used
+    {% if status.best is not none %} · <strong>Best score: {{ status.best }}</strong>{% endif %}</p>
+
+  {% if status.tries %}
+  <h2>Your attempts</h2>
+  <table>
+    <thead><tr><th scope="col">#</th><th scope="col">Submitted</th><th scope="col">Score</th><th scope="col">Feedback</th></tr></thead>
+    <tbody>
+      {% for t in status.tries %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ t.submitted_on }}{% if t.late %} (late){% endif %}</td>
+        <td>{{ t.score if t.score is not none else "waiting to be marked" }}</td>
+        <td>{{ t.feedback or "" }}{% if t.original_name %} <a href="{{ url_for('assessments.submission_file', attempt_id=t.attempt_id) }}" target="_blank" rel="noopener">{{ t.original_name }}</a>{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if status.reason %}
+  <p role="status"><strong>{{ status.reason }}</strong></p>
+  {% elif a.type == "Assignment" %}
+  <h2>Hand in your work</h2>
+  <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Your answer<br><textarea name="body" rows="10" cols="80"></textarea></label></p>
+    <p><label>And/or a file (PDF, PNG, JPG, GIF; up to 10 MB)
+      <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.gif"></label></p>
+    <p><button type="submit">Submit</button></p>
+  </form>
+  {% else %}
+  <h2>Questions</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% for q in questions %}
+    <fieldset>
+      <legend>{{ loop.index }}. {{ q.text }}</legend>
+      {% for option in q.options %}
+      <label><input type="radio" name="q{{ q.id }}" value="{{ loop.index }}" required> {{ option }}</label><br>
+      {% endfor %}
+    </fieldset>
+    {% endfor %}
+    <p><button type="submit">Submit answers</button></p>
+  </form>
+  {% endif %}
+{% endblock %}

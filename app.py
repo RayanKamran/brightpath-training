@@ -3,6 +3,7 @@ from datetime import date
 
 from flask import Flask, abort, flash, g, redirect, render_template, request, session, url_for
 
+import assessments
 import auth
 import courses
 import enrolment
@@ -31,6 +32,7 @@ app.jinja_env.globals["csrf_token"] = auth.csrf_token
 app.register_blueprint(people.bp)
 app.register_blueprint(courses.bp)
 app.register_blueprint(enrolment.bp)
+app.register_blueprint(assessments.bp)
 
 
 @app.teardown_appcontext

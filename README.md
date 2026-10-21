@@ -48,6 +48,13 @@ and can withdraw from their home page; administrators enrol and withdraw
 learners from the learner's page. Withdrawing keeps the record but ends access
 to the cohort's pages. Every run shows who enrolled and who withdrew the learner.
 
+Instructors create quizzes, final exams (multiple choice, marked automatically)
+and assignments (text and/or a file, marked by hand) at
+`/teach/<cohort>/assessments`. Learners get up to 3 attempts (final exams: 1),
+the best score counts, there are no retakes after the due date, and an
+assignment can only be resubmitted once the last submission is marked. Every
+attempt is kept; a score is never changed once given.
+
 ## Import only
 
 ```

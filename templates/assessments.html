@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Assessments — {{ cohort.title }} {{ cohort.cohort }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('courses.cohort', course_id=cohort.course_id) }}">{{ cohort.title }} — {{ cohort.cohort }}</a></p>
+  <h1>Assessments</h1>
+  {% if rows %}
+  <table>
+    <thead><tr><th scope="col">Title</th><th scope="col">Type</th><th scope="col">Due</th><th scope="col">Weight</th>
+      <th scope="col">Status</th><th scope="col">Questions</th><th scope="col">Attempts</th><th scope="col">Unmarked</th></tr></thead>
+    <tbody>
+      {% for a in rows %}
+      <tr>
+        <td><a href="{{ url_for('assessments.edit', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">{{ a.title }}</a></td>
+        <td>{{ a.type }}</td><td>{{ a.due_on or "—" }}</td><td>{{ a.weight_pct | round(1) }}%</td><td>{{ a.status }}</td>
+        <td>{{ a.questions if a.type != "Assignment" else "—" }}</td>
+        <td><a href="{{ url_for('assessments.attempts', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">{{ "{:,}".format(a.attempts) }}</a></td>
+        <td>{{ a.unmarked if a.type == "Assignment" else "—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No assessments yet.</p>
+  {% endif %}
+
+  <h2>New assessment</h2>
+  <form method="post" action="{{ url_for('assessments.new', course_id=cohort.course_id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Type <select name="type">{% for t in types %}<option>{{ t }}</option>{% endfor %}</select></label>
+      <label>Title <input name="title" required></label></p>
+    <p><label>Due <input type="date" name="due_on"></label>
+      <label>Weight % <input type="number" name="weight_pct" min="0" max="100" step="0.5" value="0"></label></p>
+    <p><button type="submit">Create as draft</button></p>
+  </form>
+{% endblock %}

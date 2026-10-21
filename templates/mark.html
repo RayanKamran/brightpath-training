@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Mark — {{ a.title }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('assessments.attempts', course_id=cohort.course_id, assessment_id=a.assessment_id) }}">Attempts — {{ a.title }}</a></p>
+  <h1>{{ t.full_name }}</h1>
+  <p>Submitted {{ t.submitted_on }}{% if late %} (late){% endif %}.</p>
+  {% if t.body %}<h2>Answer</h2><div style="white-space: pre-line; border: 1px solid #999; padding: 0.5em">{{ t.body }}</div>{% endif %}
+  {% if t.original_name %}<p>File: <a href="{{ url_for('assessments.submission_file', attempt_id=t.attempt_id) }}" target="_blank" rel="noopener">{{ t.original_name }}</a></p>{% endif %}
+  {% if not t.body and not t.original_name %}<p>Imported submission: only the score is on record.</p>{% endif %}
+
+  {% if t.score is not none %}
+  <p><strong>Marked: {{ t.score }}</strong>{% if t.feedback %} — {{ t.feedback }}{% endif %}</p>
+  {% else %}
+  <h2>Mark</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p><label>Score (0–100) <input type="number" name="score" min="0" max="100" required></label></p>
+    <p><label>Feedback<br><textarea name="feedback" rows="4" cols="60"></textarea></label></p>
+    <p><button type="submit">Save mark</button> A mark can't be changed once saved.</p>
+  </form>
+  {% endif %}
+{% endblock %}
