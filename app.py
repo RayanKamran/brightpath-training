@@ -30,6 +30,11 @@ def close_db(exc):
         db.close()
 
 
+@app.errorhandler(403)
+def forbidden(exc):
+    return render_template("403.html"), 403
+
+
 @app.route("/")
 def index():
     return redirect(url_for(HOMES[g.user["role"]] if g.user else "signin"))
