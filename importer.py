@@ -62,6 +62,17 @@ TABLES = {
 }
 
 
+# The lookups the app and reports make on the big tables (32k enrolments, 174k attempts).
+INDEXES = [
+    ("enrolments_by_learner", "enrolments", "learner_id"),
+    ("enrolments_by_course", "enrolments", "course_id"),
+    ("attempts_by_learner", "attempts", "learner_id"),
+    ("attempts_by_course", "attempts", "course_id"),
+    ("attempts_by_assessment", "attempts", "assessment_id, learner_id"),
+    ("assessments_by_course", "assessments", "course_id"),
+]
+
+
 def connect(db_path=DB_PATH):
     """Open the database, creating the file and tables if needed."""
     db_path = Path(db_path)
@@ -71,6 +82,8 @@ def connect(db_path=DB_PATH):
         cols = ", ".join(f"{c} {'INTEGER' if c in t['ints'] else 'REAL' if c in t['reals'] else 'TEXT'}"
                          for c in t["cols"])
         db.execute(f"CREATE TABLE IF NOT EXISTS {table} ({cols}, PRIMARY KEY ({', '.join(t['key'])}))")
+    for name, table, cols in INDEXES:
+        db.execute(f"CREATE INDEX IF NOT EXISTS {name} ON {table} ({cols})")
     return db
 
 

@@ -55,6 +55,11 @@ the best score counts, there are no retakes after the due date, and an
 assignment can only be resubmitted once the last submission is marked. Every
 attempt is kept; a score is never changed once given.
 
+Reports, each with a CSV download: administrators see completion by client and
+department at `/admin/reports/completion` (client administrators only their own
+client); instructors see every learner's best scores for the cohorts they teach
+or taught at `/teach/results`.
+
 ## Import only
 
 ```

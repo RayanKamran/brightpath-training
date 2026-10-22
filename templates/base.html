@@ -18,7 +18,8 @@
     {% if g.user.role == "administrator" %}
     <nav>
       <a href="{{ url_for('admin_home') }}">Home</a> ·
-      <a href="{{ url_for('people.learners') }}">Learners</a>
+      <a href="{{ url_for('people.learners') }}">Learners</a> ·
+      <a href="{{ url_for('reports.completion_page') }}">Reports</a>
       {% if not g.user.client_id %} · <a href="{{ url_for('people.cohorts') }}">Cohorts</a>{% endif %}
     </nav>
     {% endif %}

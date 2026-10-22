@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Results — {{ cohort.title }} {{ cohort.cohort }} — BrightPath{% endblock %}
+{% block content %}
+  <p><a href="{{ url_for('reports.results_index') }}">All results</a></p>
+  <h1>Results — {{ cohort.title }} — {{ cohort.cohort }}</h1>
+  <p>Each cell is the learner's best score. Blank = not attempted; "unmarked" = submitted but not marked yet.
+    Overall is a simple average of best scores on the assessments attempted: weights are not used, because the
+    imported weights are unreliable.</p>
+  <p>{{ "{:,}".format(total) }} enrolment{{ "" if total == 1 else "s" }} ·
+    <a href="{{ url_for('reports.results_csv', course_id=cohort.course_id) }}">Download CSV (all rows)</a></p>
+  <table>
+    <thead><tr>
+      <th scope="col">Learner</th><th scope="col">Email</th><th scope="col">Attempt</th><th scope="col">Outcome</th>
+      <th scope="col">Withdrawn on</th>
+      {% for a in assessments %}<th scope="col">{{ a.title }}{% if a.status == "draft" %} (draft){% endif %}</th>{% endfor %}
+      <th scope="col">Overall</th>
+    </tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.name }}</td><td>{{ r.email }}</td><td>{{ r.attempt }}</td><td>{{ r.outcome }}</td><td>{{ r.withdrawn_on }}</td>
+        {% for c in r.cells %}<td>{{ c }}</td>{% endfor %}
+        <td>{{ r.average if r.average is not none else "—" }} · {{ r.attempted }} of {{ assessments | length }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if pages > 1 %}
+  <p>
+    {% if page > 1 %}<a href="{{ url_for('reports.results_page', course_id=cohort.course_id, page=page - 1) }}">Previous</a>{% endif %}
+    Page {{ page }} of {{ pages }}
+    {% if page < pages %}<a href="{{ url_for('reports.results_page', course_id=cohort.course_id, page=page + 1) }}">Next</a>{% endif %}
+  </p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Completion — BrightPath{% endblock %}
+{% block content %}
+  <h1>Completion by client and department</h1>
+  <p>Completion % = (Pass + Distinction) ÷ (Pass + Distinction + Fail + Withdrawn). In-progress enrolments are not
+    counted in the %. Counts are of enrolments, so a learner who took a course twice counts twice.</p>
+  <form method="get">
+    <label>Course
+      <select name="course">
+        <option value="">All courses</option>
+        {% for t in titles %}<option{% if t == course %} selected{% endif %}>{{ t }}</option>{% endfor %}
+      </select>
+    </label>
+    <button type="submit">Show</button>
+    <a href="{{ url_for('reports.completion_csv', course=course) if course else url_for('reports.completion_csv') }}">Download CSV</a>
+  </form>
+  <table>
+    <thead><tr><th scope="col">Client / department</th><th scope="col">Enrolments</th>
+      {% for o in outcomes %}<th scope="col">{{ o }}</th>{% endfor %}<th scope="col">Completion %</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{% if r.level == "department" %}&nbsp;&nbsp;&nbsp;{{ r.label }}{% else %}<strong>{{ r.label }}</strong>{% endif %}</td>
+        <td>{{ "{:,}".format(r.enrolments) }}</td>
+        {% for o in outcomes %}<td>{{ "{:,}".format(r.counts[o]) }}</td>{% endfor %}
+        <td>{{ r.pct }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Results — BrightPath{% endblock %}
+{% block content %}
+  <h1>Results</h1>
+  {% if cohorts %}
+  <table>
+    <thead><tr><th scope="col">Course</th><th scope="col">Cohort</th><th scope="col">Runs</th><th scope="col">Enrolments</th></tr></thead>
+    <tbody>
+      {% for c in cohorts %}
+      <tr>
+        <td><a href="{{ url_for('reports.results_page', course_id=c.course_id) }}">{{ c.title }}</a></td>
+        <td>{{ c.cohort }}</td><td>{{ c.starts_on }} to {{ c.ends_on }}</td><td>{{ "{:,}".format(c.enrolled) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>You have not taught any cohorts.</p>
+  {% endif %}
+{% endblock %}

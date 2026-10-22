@@ -9,6 +9,7 @@ import courses
 import enrolment
 import importer
 import people
+import reports
 
 HOMES = {"administrator": "admin_home", "instructor": "instructor_home", "learner": "learner_home"}
 
@@ -33,6 +34,7 @@ app.register_blueprint(people.bp)
 app.register_blueprint(courses.bp)
 app.register_blueprint(enrolment.bp)
 app.register_blueprint(assessments.bp)
+app.register_blueprint(reports.bp)
 
 
 @app.teardown_appcontext
