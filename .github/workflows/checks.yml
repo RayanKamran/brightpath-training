@@ -1,0 +1,41 @@
+# Layer 4: automated checks that block. Red blocks the merge (branch protection on master).
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]  # the README promises both
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Unit tests + the one journey on the real seed data
+        run: python -m unittest discover tests -v
+      - name: The real import still loads every seed CSV
+        run: python importer.py --reset
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff==0.14.5
+      # Bugs, not style: syntax errors, undefined names, unused imports/variables, bugbear.
+      - run: ruff check --select E9,F,B --ignore B905 --exclude .agents --output-format github .

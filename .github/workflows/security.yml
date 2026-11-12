@@ -1,0 +1,47 @@
+# Layer 3: security review that can block. A finding is cleared by fixing it, or by a
+# `# nosec BXXX - <reason>` on the line, which the risk-tier check then marks High so a person reads it.
+name: security
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install bandit==1.9.4
+      # Medium+ severity and confidence. The baseline holds the 9 pre-existing B608 hits, all of which
+      # interpolate constant SQL fragments, so only NEW findings fail (the post's "Pre-existing" tag).
+      - run: bandit -r . -x ./.agents,./tests,./.venv -ll -ii -b .github/bandit-baseline.json
+
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pip-audit==2.9.0
+      - run: pip-audit -r requirements.txt
+
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          queries: security-extended
+      - uses: github/codeql-action/analyze@v3

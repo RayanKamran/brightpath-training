@@ -1,0 +1,204 @@
+{
+  "errors": [],
+  "metrics": {},
+  "results": [
+    {
+      "code": "98     db = auth.get_db()\n99     counts = [(t, db.execute(f\"SELECT COUNT(*) FROM {t}\").fetchone()[0]) for t in importer.TABLES]\n100     return render_template(\"data.html\", counts=counts)\n",
+      "col_offset": 29,
+      "end_col_offset": 56,
+      "filename": "./app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 99,
+      "line_range": [
+        99
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "71 def _find(db, where, **params):\n72     return db.execute(f\"SELECT * FROM ({_PEOPLE}) WHERE {where}\",\n73                       dict(params, today=date.today().isoformat())).fetchone()\n",
+      "col_offset": 22,
+      "end_col_offset": 64,
+      "filename": "./auth.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 72,
+      "line_range": [
+        72
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "29     \"\"\"Is the learner enrolled on the cohort and not withdrawn?\"\"\"\n30     return db.execute(f\"SELECT 1 FROM enrolments e WHERE e.learner_id = ? AND e.course_id = ? AND NOT {WITHDRAWN}\",\n31                       (learner_id, course_id)).fetchone() is not None\n",
+      "col_offset": 22,
+      "end_col_offset": 114,
+      "filename": "./courses.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 30,
+      "line_range": [
+        30
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "43         return None, f\"{learner['full_name']} already has an enrolment on {name}, which stays as their record.\"\n44     current = db.execute(f\"SELECT c.cohort FROM enrolments e JOIN courses c USING (course_id) \"\n45                          f\"WHERE e.learner_id = :learner AND c.title = :title AND {ACTIVE}\",\n46                          {\"learner\": learner_id, \"title\": cohort[\"title\"], \"today\": today()}).fetchone()\n",
+      "col_offset": 25,
+      "end_col_offset": 91,
+      "filename": "./enrolment.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 44,
+      "line_range": [
+        44,
+        45
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "76     return db.execute(\n77         f\"SELECT e.*, c.title, c.cohort, c.starts_on, COALESCE(cs.status, 'published') AS cohort_status, \"\n78         f\"l.full_name AS learner_name, \"\n79         f\"CASE WHEN e.enrolled_by = 'self' THEN 'self' ELSE COALESCE(sb.full_name, e.enrolled_by) END AS enrolled_by_name, \"\n80         f\"{WITHDRAWN} AS withdrawn, {ACTIVE} AS active, \"\n81         f\"CASE WHEN w.withdrawn_by IS NULL THEN 'imported' WHEN w.withdrawn_by = 'self' THEN 'self' \"\n82         f\"ELSE COALESCE(wb.full_name, w.withdrawn_by) END AS withdrawn_by_name \"\n83         f\"FROM enrolments e JOIN courses c USING (course_id) LEFT JOIN course_status cs USING (course_id) \"\n84         f\"JOIN learners l USING (learner_id) \"\n85         f\"LEFT JOIN staff sb ON sb.staff_id = e.enrolled_by \"\n86         f\"LEFT JOIN withdrawals w USING (enrolment_id) LEFT JOIN staff wb ON wb.staff_id = w.withdrawn_by \"\n87         f\"WHERE {where} ORDER BY c.starts_on, c.title, l.full_name\", {**params, \"today\": today()}).fetchall()\n88 \n",
+      "col_offset": 8,
+      "end_col_offset": 67,
+      "filename": "./enrolment.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 77,
+      "line_range": [
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "122         for table, t in TABLES.items():\n123             existing = {\"|\".join(r) for r in db.execute(f\"SELECT {', '.join(t['key'])} FROM {table}\")}\n124             known[table] = existing if len(t[\"key\"]) == 1 else set()\n",
+      "col_offset": 56,
+      "end_col_offset": 100,
+      "filename": "./importer.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 123,
+      "line_range": [
+        123
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "92     params = {\"scope\": auth.client_scope(), \"q\": q, \"like\": f\"%{q}%\"}\n93     total = db.execute(f\"SELECT COUNT(*) FROM learners l WHERE {where}\", params).fetchone()[0]\n94     rows = db.execute(\n",
+      "col_offset": 23,
+      "end_col_offset": 71,
+      "filename": "./people.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 93,
+      "line_range": [
+        93
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "94     rows = db.execute(\n95         f\"SELECT l.learner_id, l.full_name, l.email, l.department, l.account_status, c.name AS client_name \"\n96         f\"FROM learners l LEFT JOIN clients c USING (client_id) WHERE {where} \"\n97         f\"ORDER BY l.full_name, l.learner_id LIMIT :limit OFFSET :offset\",\n98         {**params, \"limit\": PAGE_SIZE, \"offset\": (page - 1) * PAGE_SIZE}).fetchall()\n",
+      "col_offset": 8,
+      "end_col_offset": 73,
+      "filename": "./people.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 95,
+      "line_range": [
+        95,
+        96,
+        97
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "38     groups = db.execute(\n39         f\"SELECT l.client_id, cl.name AS client, l.department, x.outcome, COUNT(*) AS n FROM (\"\n40         f\"  SELECT e.learner_id, CASE WHEN {WITHDRAWN} THEN 'Withdrawn' \"\n41         f\"    WHEN e.outcome IN ('Pass', 'Distinction', 'Fail') THEN e.outcome ELSE 'In progress' END AS outcome \"\n42         f\"  FROM enrolments e JOIN courses c USING (course_id) WHERE :course IS NULL OR c.title = :course) x \"\n43         f\"JOIN learners l USING (learner_id) LEFT JOIN clients cl ON cl.client_id = l.client_id \"\n44         f\"WHERE :scope IS NULL OR l.client_id = :scope GROUP BY l.client_id, l.department, x.outcome\",\n45         {\"scope\": scope, \"course\": course}).fetchall()\n",
+      "col_offset": 8,
+      "end_col_offset": 101,
+      "filename": "./reports.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 39,
+      "line_range": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    }
+  ]
+}
