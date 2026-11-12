@@ -25,12 +25,15 @@ LOW_PATHS = [r"\.md$", r"^docs/", r"^tests/", r"\.txt$"]
 
 
 def git(*args):
-    return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
+    return subprocess.run(["git", *args], capture_output=True, text=True, encoding="utf-8",
+                          errors="replace", check=True).stdout
 
 
 def classify(base):
     files = [f for f in git("diff", "--name-only", f"{base}...HEAD").splitlines() if f]
-    added = [line[1:] for line in git("diff", "-U0", f"{base}...HEAD").splitlines()
+    # Added lines in code only (.py, templates): docs that merely mention "password" don't count.
+    added = [line[1:] for line in git("diff", "-U0", f"{base}...HEAD", "--", "*.py", "*.html",
+                                 ":(exclude)tests/").splitlines()
              if line.startswith("+") and not line.startswith("+++")]
     reasons = []
     for f in files:
