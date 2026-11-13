@@ -3,6 +3,7 @@
 Admin creates a learner -> an instructor builds and publishes a cohort with a page and a
 2-question quiz -> the learner enrols and scores 100 -> the instructor sees that score.
 """
+import re
 import shutil
 import tempfile
 import unittest
@@ -81,15 +82,16 @@ class JourneyTest(unittest.TestCase):
         self.assertIn("Stories beat spreadsheets.", self.client.get(page_path.replace("/teach/", "/learn/")).text)
         take = f"/learn/{course_id}/assessments/{assessment_id}"
         form = self.client.get(take).text
-        qids = sorted(set(part.split('"')[0] for part in form.split('name="q')[1:]))
+        qids = sorted(set(re.findall(r'name="q(\d+)"', form)))
         self.assertEqual(len(qids), 2, "the quiz should show two questions")
         self.assertIn("You scored 100.", self.post(take, {f"q{q}": 1 for q in qids}).text)
 
         # 4. The instructor sees Robin's 100 in the results report.
         self.as_user(INSTRUCTOR)
         results = self.client.get(f"/teach/results/{course_id}").text
-        self.assertIn("Robin Okoye", results)
-        self.assertIn("100", results)
+        robin = re.search(r"<tr>\s*<td>Robin Okoye</td>.*?</tr>", results, re.S)
+        self.assertIsNotNone(robin, "Robin should have a row in the results")
+        self.assertIn("<td>100</td>", robin.group())
 
 
 if __name__ == "__main__":

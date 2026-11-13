@@ -18,7 +18,7 @@ TIERS = ["Low", "Medium", "High"]
 # they don't hold, or loses data. Two people approve.
 HIGH_PATHS = [r"^auth\.py$", r"^people\.py$", r"^importer\.py$", r"^run\.py$", r"^app\.py$",
               r"^\.github/", r"^scripts/risk_tier\.py$", r"^requirements\.txt$"]
-# Words in added lines that mean the change touches who may do what, or whose data is shown.
+# Words in added or removed lines that mean the change touches who may do what, or whose data is shown.
 HIGH_WORDS = [r"client_scope", r"role_required", r"password", r"csrf", r"session\[", r"abort\(403",
               r"SECRET_KEY", r"DROP\s+TABLE", r"DELETE\s+FROM", r"\bnosec\b", r"noqa"]
 LOW_PATHS = [r"\.md$", r"^docs/", r"^tests/", r"\.txt$"]
@@ -30,19 +30,20 @@ def git(*args):
 
 
 def classify(base):
-    files = [f for f in git("diff", "--name-only", f"{base}...HEAD").splitlines() if f]
-    # Added lines in code only (.py, templates): docs that merely mention "password" don't count.
-    added = [line[1:] for line in git("diff", "-U0", f"{base}...HEAD", "--", "*.py", "*.html",
+    files = [f for f in git("diff", "--name-only", "--no-renames", f"{base}...HEAD").splitlines() if f]
+    # Added AND removed lines in code only (.py, templates): removing a guard is as risky as adding one,
+    # and docs or tests that merely mention "password" don't count.
+    changed = [line[1:] for line in git("diff", "-U0", f"{base}...HEAD", "--", "*.py", "*.html",
                                  ":(exclude)tests/").splitlines()
-             if line.startswith("+") and not line.startswith("+++")]
+             if line[:1] in "+-" and not line.startswith(("+++", "---"))]
     reasons = []
     for f in files:
         if any(re.search(p, f) for p in HIGH_PATHS):
             reasons.append(("High", f"touches {f}"))
     for word in HIGH_WORDS:
-        hits = [line.strip() for line in added if re.search(word, line, re.I)]
+        hits = [line.strip() for line in changed if re.search(word, line, re.I)]
         if hits:
-            reasons.append(("High", f"adds lines matching `{word}`, e.g. `{hits[0][:80]}`"))
+            reasons.append(("High", f"adds or removes lines matching `{word}`, e.g. `{hits[0][:80]}`"))
     for f in files:
         if not any(re.search(p, f) for p in LOW_PATHS + HIGH_PATHS):
             reasons.append(("Medium", f"changes product code {f}"))

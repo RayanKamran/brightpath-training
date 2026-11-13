@@ -31,6 +31,9 @@ review thread resolved.
   conversation to be resolved, so the author must fix it (and say which commit) or reply with a
   reason before it can merge.
 - **Not the author:** the reviewer never sees the author's reasoning, only what it shipped.
+- **Weak spot:** the builder agent uses the owner's `gh` login, so GitHub would let it resolve its
+  own threads. Only the skill's rule ("never resolve a thread for a human") stops it. The owner
+  resolves threads after reading the answer.
   It is still an agent. Its findings count, but its approval never fills a human slot.
 - **Cost:** runs on the Claude subscription the builder already uses, so it costs nothing extra.
   The Claude Code GitHub Action would bill API usage, which is out of scope.
@@ -74,6 +77,9 @@ review thread resolved.
   approval. The person who prompted the agent is always a required reviewer.
 
 ## Branch protection on `master`
+The owner applies this once, after this harness PR merges. Until then every "Blocks: yes" above is
+only advisory.
+
 - A pull request is required, so nobody pushes directly. This also applies to admins, which
   includes the agent using the owner's `gh` login.
 - Required checks: `tests (ubuntu-latest)`, `tests (windows-latest)`, `lint`, `bandit`,
