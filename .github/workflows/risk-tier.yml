@@ -1,0 +1,33 @@
+# Layer 5: human approval scaled by risk. The change sets the tier, not the author.
+name: risk-tier
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  risk-tier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - id: tier
+        run: python scripts/risk_tier.py origin/${{ github.base_ref }}
+      - name: Label the PR with its tier
+        if: always() && steps.tier.outputs.tier != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          TIER: ${{ steps.tier.outputs.tier }}
+        run: |
+          for t in Low Medium High; do gh label create "risk: $t" --force -R "$GITHUB_REPOSITORY" >/dev/null; done
+          gh pr edit "$PR" -R "$GITHUB_REPOSITORY" --remove-label "risk: Low,risk: Medium,risk: High" || true
+          gh pr edit "$PR" -R "$GITHUB_REPOSITORY" --add-label "risk: $TIER"

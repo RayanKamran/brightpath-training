@@ -84,3 +84,9 @@ Wipes the database, imports everything again and starts the app.
 .venv/Scripts/python -m unittest discover tests     (Windows)
 .venv/bin/python -m unittest discover tests         (macOS/Linux)
 ```
+
+## Review layers
+
+Every change lands as a pull request and goes through automated checks, a security
+scan, a fresh-context AI review and a risk tier that decides who approves. See
+[docs/review-layers.md](docs/review-layers.md) and [REVIEW.md](REVIEW.md).

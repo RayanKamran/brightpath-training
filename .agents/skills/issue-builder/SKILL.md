@@ -1,6 +1,6 @@
 ---
 name: issue-builder
-description: Use whenever asked to pick up, work on, or build a GitHub issue in this repo. Runs every build issue through brainstorm → plan → approval → Ponytail-style build → browser check → report, all on the issue itself.
+description: Use whenever asked to pick up, work on, or build a GitHub issue in this repo. Runs every build issue through brainstorm → plan → approval → Ponytail-style build on a branch → browser check → pull request through the review layers → report on the issue.
 ---
 
 # Issue builder
@@ -43,28 +43,69 @@ there. Never skip a stage.
 - Before writing anything new, search the codebase for existing code,
   helpers, components, or libraries you can reuse, and reuse them.
 - Do not build anything listed under the issue's "Stop at".
-- Commit with a message that references the issue (`#N`).
+- Work on a branch, never on `master`: `git switch -c issue-<N>-<short-name>`.
+  Commit with messages that reference the issue (`#N`).
+- Read `CLAUDE.md` and `REVIEW.md` before writing code; REVIEW.md is what the
+  reviewer will hold you to.
 
-## Stage 4 — Check it in the browser
+## Stage 4 — Check it yourself (review layer 1)
 
+- Run every test: `python -m unittest discover tests`. `tests/test_journey.py`
+  (the first build's one journey) must pass **unchanged**. Never edit it to make
+  it pass; if your change has to change the journey, stop and ask on the issue.
 - Start the app with the one command in the README.
 - Use the **Chrome DevTools MCP** to open the app and go through every
   "Done when" item on the issue as a real user would: navigate, click, type,
   take screenshots, and read the console for errors.
 - A module is NOT done until every "Done when" item has been seen working in
   the browser. If something fails, fix it and check again.
+- This is evidence, not approval: you are the author.
 
-## Stage 5 — Report on the issue
+## Stage 5 — Pull request and review layers 2–5
 
-Post a final comment with exactly these three sections:
+See `docs/review-layers.md` for what each layer is and what it blocks.
+
+1. Push the branch and open a PR with the repo's template
+   (`.github/pull_request_template.md`): `Closes #N`, tick the risk tier, and add
+   evidence (test output, screenshots) and how to revert.
+2. **Layer 2 — fresh-context review.** Run `/code-review high <PR> --comment` so
+   a reviewer that has not seen this conversation posts inline findings on the PR.
+   On a High-tier PR also run `/security-review` and post its findings on the PR.
+   If those commands are not available, dispatch a fresh subagent with only the
+   diff (`gh pr diff <PR>`), the issue, `CLAUDE.md` and `REVIEW.md`, and post its
+   findings as inline comments with
+   `gh api repos/{owner}/{repo}/pulls/<PR>/reviews --input review.json`
+   (`{"event":"COMMENT","body":"<count summary>","comments":[{"path":..,"line":..,"body":..}]}`).
+3. **Layers 3–5 run in CI by themselves.** Wait for them: `gh pr checks <PR> --watch`.
+4. **Answer every finding** from every layer, one by one, on the PR:
+   - fixed: push the fix, reply "Fixed in `<sha>`" on the thread;
+   - not fixing: reply with the reason (false positive, pre-existing, out of
+     scope with a follow-up issue). Never silence a check without a reason on
+     the line (`# nosec BXXX - reason`).
+   Repeat until every check is green. After 3 review rounds, stop and ask me
+   on the PR whether the approach is wrong.
+5. Fill in the PR's **Review layers** table: for each layer, how it ran, what
+   it caught, and what you did about each finding.
+6. **Never merge, never approve, never resolve a thread for a human, never push
+   to `master`.** An agent's approval never counts as a person's. I merge, after
+   the approvals that the risk tier asks for.
+
+## Stage 6 — Report on the issue
+
+Post a final comment with exactly these four sections:
 
 ### Built
-What you built, and the commits.
+What you built, the PR, and the commits.
 
 ### Checked
 Each "Done when" item, how you checked it in the browser, and the result.
 
+### Reviewed
+Risk tier (from the `risk-tier` check), and for each review layer: what it
+caught and what you did about it. Link the PR threads.
+
 ### Skipped
 Anything you did not do or could not check, and why. Write "Nothing" if empty.
 
-Then tell me in chat that the report is posted. Do not close the issue; I will.
+Then tell me in chat that the report is posted and the PR is ready for me.
+Do not close the issue; merging the PR will.
