@@ -1,0 +1,104 @@
+{
+  "title": "Emplacements",
+  "search": "Rechercher des emplacements...",
+  "noResults": "Aucun emplacement trouvé",
+  "locationsFound": "emplacements trouvés",
+  "locationNotFound": "Emplacement non trouvé",
+  "backToLocations": "Retour aux Emplacements",
+  "createLocation": "Créer un Emplacement",
+  "saving": "Enregistrement...",
+  "cancel": "Annuler",
+  "createSuccess": "Emplacement créé avec succès.",
+  "updateSuccess": "Emplacement mis à jour avec succès.",
+  "pageTitle": {
+    "create": "Créer un Emplacement",
+    "edit": "Modifier l'Emplacement",
+    "save": "Enregistrer les Modifications"
+  },
+  "locationList": {
+    "id": "ID",
+    "name": "Code",
+    "displayName": "Nom",
+    "description": "Description",
+    "roles": "Rôles",
+    "active": "Statut",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+  "fields": {
+    "name": "Code d'Emplacement",
+    "nameReadOnlyHint": "Le code d'emplacement ne peut pas être modifié après la création.",
+    "displayName": "Nom d'Affichage",
+    "description": "Description",
+    "active": "Actif"
+  },
+  "address": {
+    "sectionTitle": "Adresse",
+    "line1": "Adresse",
+    "line2": "Complément d'Adresse",
+    "city": "Ville",
+    "state": "État / Province",
+    "postalCode": "Code Postal",
+    "country": "Pays"
+  },
+  "addresses": {
+    "sectionTitle": "Adresses",
+    "add": "Ajouter une Adresse",
+    "remove": "Supprimer",
+    "type": "Type",
+    "isPrimary": "Principale",
+    "line1": "Adresse",
+    "line2": "Complément d'Adresse",
+    "city": "Ville",
+    "state": "État / Province",
+    "postalCode": "Code Postal",
+    "country": "Pays",
+    "primaryRequired": "Exactement une adresse doit être marquée comme principale.",
+    "typeOptions": {
+      "physical": "Physique",
+      "mailing": "Postale",
+      "billing": "Facturation",
+      "shipping": "Livraison"
+    }
+  },
+  "contacts": {
+    "sectionTitle": "Informations de Contact",
+    "type": "Type",
+    "label": "Libellé",
+    "value": "Valeur",
+    "add": "Ajouter un Contact",
+    "remove": "Supprimer",
+    "typeOptions": {
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "web": "Site Web"
+    }
+  },
+  "deactivate": {
+    "button": "Désactiver",
+    "confirmTitle": "Désactiver l'Emplacement",
+    "confirmMessage": "Êtes-vous sûr de vouloir désactiver {{name}} ? Cela marquera l'emplacement comme inactif.",
+    "confirm": "Désactiver",
+    "cancel": "Annuler"
+  },
+  "activate": {
+    "button": "Activer",
+    "confirmTitle": "Activer l'Emplacement",
+    "confirmMessage": "Êtes-vous sûr de vouloir activer {{name}} ? Cela marquera l'emplacement comme actif.",
+    "confirm": "Activer",
+    "cancel": "Annuler"
+  },
+  "filter": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "all": "Tous"
+  },
+  "basicInfo": "Informations de Base",
+  "locationId": "ID d'Emplacement",
+  "name": "Nom",
+  "description": "Description",
+  "roles": "Rôles"
+}

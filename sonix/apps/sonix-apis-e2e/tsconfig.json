@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "outDir": "out-tsc/@dms-sonix/sonix-apis-e2e",
+    "types": ["vitest/globals", "node"],
+    "esModuleInterop": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false
+  },
+  "include": ["vitest.config.ts", "src/**/*.ts"],
+  "references": []
+}

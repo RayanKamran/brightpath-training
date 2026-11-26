@@ -1,0 +1,10 @@
+{
+  "name": "@dms-sonix/sonix-apis-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@dms-sonix/sonix-apis"
+    ]
+  }
+}

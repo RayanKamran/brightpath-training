@@ -1,0 +1,85 @@
+{
+  "appName": "DMS Sonix",
+  "appFullName": "Système Intégré de Concessionnaires",
+  "loading": "Chargement...",
+  "loadingLocation": "Loading location information...",
+  "noLocationAssigned": "No location assigned",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "confirm": "Confirmer",
+  "delete": "Supprimer",
+  "edit": "Modifier",
+  "create": "Créer",
+  "update": "Mettre à jour",
+  "close": "Fermer",
+  "back": "Retour",
+  "next": "Suivant",
+  "previous": "Précédent",
+  "submit": "Soumettre",
+  "reset": "Réinitialiser",
+  "search": "Rechercher",
+  "filter": "Filtrer",
+  "clear": "Effacer",
+  "apply": "Appliquer",
+  "yes": "Oui",
+  "no": "Non",
+  "ok": "OK",
+  "retry": "Réessayer",
+  "refresh": "Actualiser",
+  "export": "Exporter",
+  "import": "Importer",
+  "download": "Télécharger",
+  "upload": "Téléverser",
+  "print": "Imprimer",
+  "share": "Partager",
+  "copy": "Copier",
+  "paste": "Coller",
+  "actions": "Actions",
+  "viewDetails": "Voir les Détails",
+  "addNew": "Ajouter Nouveau",
+  "error": "Erreur",
+  "success": "Succès",
+  "warning": "Avertissement",
+  "info": "Information",
+  "notFound": {
+    "title": "Page non trouvée",
+    "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "backHome": "Retour à l'accueil"
+  },
+  "unauthorized": "Non Autorisé",
+  "forbidden": "Interdit",
+  "serverError": "Erreur Serveur",
+  "auth": {
+    "signIn": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous pour accéder à votre compte",
+      "button": "Se connecter"
+    },
+    "callback": {
+      "completing": "Completing sign in..."
+    },
+    "errors": {
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
+      "sessionInvalid": "Votre session n'est plus valide. Veuillez vous reconnecter.",
+      "noLocationsAssigned": "Aucun emplacement n'est attribué à votre compte. Contactez votre administrateur.",
+      "tenantAccessLost": "Nous n'avons pas pu vérifier votre accès. Veuillez vous reconnecter.",
+      "authError": "Un problème est survenu lors de la vérification de votre session. Veuillez vous reconnecter.",
+      "serviceUnavailable": "Le service d'authentification est indisponible. Veuillez réessayer ou contacter votre administrateur."
+    }
+  },
+  "offline": {
+    "noNetwork": "No network connection. Check your internet and try again.",
+    "serverUnavailable": "Server unavailable. We're trying to reconnect...",
+    "restored": "Connection restored."
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred."
+  },
+  "comingSoon": {
+    "title": "Coming Soon",
+    "description": "This feature is under development."
+  },
+  "verifyingPermissions": "Veuillez patienter pendant la vérification de vos autorisations",
+  "loadingApp": "{{appName}} Chargement",
+  "locationChangePrompt": "Le changement de localisation vous fera quitter cette page et pourrait entraîner la perte de données non enregistrées. Êtes-vous sûr de vouloir continuer ?"
+}

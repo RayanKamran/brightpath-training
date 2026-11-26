@@ -1,0 +1,108 @@
+{
+  "title": "Locations",
+  "search": "Search locations...",
+  "noResults": "No locations found",
+  "locationsFound": "locations found",
+  "locationNotFound": "Location not found",
+  "backToLocations": "Back to Locations",
+  "createLocation": "Create Location",
+  "saving": "Saving...",
+  "cancel": "Cancel",
+  "createSuccess": "Location created successfully.",
+  "updateSuccess": "Location updated successfully.",
+  "pageTitle": {
+    "create": "Create Location",
+    "edit": "Edit Location",
+    "save": "Save Changes"
+  },
+  "locationList": {
+    "id": "ID",
+    "name": "Code",
+    "displayName": "Display Name",
+    "description": "Description",
+    "roles": "Roles",
+    "active": "Status",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "fields": {
+    "name": "Location Code",
+    "nameReadOnlyHint": "The location code cannot be changed after creation.",
+    "displayName": "Display Name",
+    "description": "Description",
+    "active": "Active"
+  },
+  "address": {
+    "sectionTitle": "Address",
+    "line1": "Street Address",
+    "line2": "Address Line 2",
+    "city": "City",
+    "state": "State / Province",
+    "postalCode": "Postal Code",
+    "country": "Country"
+  },
+  "addresses": {
+    "sectionTitle": "Addresses",
+    "add": "Add Address",
+    "remove": "Remove",
+    "type": "Type",
+    "isPrimary": "Primary",
+    "line1": "Street Address",
+    "line2": "Address Line 2",
+    "city": "City",
+    "state": "State / Province",
+    "postalCode": "Postal Code",
+    "country": "Country",
+    "primaryRequired": "Exactly one address must be marked as primary.",
+    "typeOptions": {
+      "physical": "Physical",
+      "mailing": "Mailing",
+      "billing": "Billing",
+      "shipping": "Shipping"
+    }
+  },
+  "contacts": {
+    "sectionTitle": "Contact Information",
+    "type": "Type",
+    "label": "Label",
+    "value": "Value",
+    "add": "Add Contact",
+    "remove": "Remove",
+    "typeOptions": {
+      "phone": "Phone",
+      "email": "Email",
+      "web": "Website"
+    }
+  },
+  "deactivate": {
+    "button": "Deactivate",
+    "confirmTitle": "Deactivate Location",
+    "confirmMessage": "Are you sure you want to deactivate {{name}}? This will mark the location as inactive.",
+    "confirm": "Deactivate",
+    "cancel": "Cancel"
+  },
+  "activate": {
+    "button": "Activate",
+    "confirmTitle": "Activate Location",
+    "confirmMessage": "Are you sure you want to activate {{name}}? This will mark the location as active.",
+    "confirm": "Activate",
+    "cancel": "Cancel"
+  },
+  "filter": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "all": "All"
+  },
+  "unsavedChanges": {
+    "createMessage": "Creation of this new location will be cancelled. Are you sure you want to cancel?",
+    "editMessage": "Changes made to this location will be lost. Are you sure you want to cancel?"
+  },
+  "basicInfo": "Basic Information",
+  "locationId": "Location ID",
+  "name": "Name",
+  "description": "Description",
+  "roles": "Roles"
+}

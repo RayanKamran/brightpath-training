@@ -1,0 +1,20 @@
+{
+  "currentLocation": "Current Location",
+  "locationName": "Location Name",
+  "description": "Description",
+  "locationId": "Location ID",
+  "availableLocations": "Available Locations",
+  "yourRoles": "Your Roles",
+  "loadingLocation": "Loading location information...",
+  "userClaims": "User Claims",
+  "claimName": "Name",
+  "claimValue": "Value",
+  "signOut": "Sign Out",
+  "signIn": "Sign In",
+  "welcome": "Welcome to the DMS Sonix dashboard. Select a module below to get started.",
+  "status": {
+    "complete": "Complete",
+    "inProgress": "In Progress",
+    "notStarted": "Not Started"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/client-web-e2e"
+    },
+    {
+      "path": "./apps/client-web"
+    },
+    {
+      "path": "./libs/shared/data-models"
+    },
+    {
+      "path": "./libs/shared/testing-helpers"
+    },
+    {
+      "path": "./apps/sonix-apis-e2e"
+    },
+    {
+      "path": "./apps/sonix-apis"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "types": [
+    { "type": "chore", "section": "🔧 Chores", "hidden": false },
+    { "type": "doc", "section": "📚 Documentation" },
+    { "type": "feat", "section": "✨ Features" },
+    { "type": "fix", "section": "🐛 Bug Fixes" },
+    { "type": "refact", "section": "♻️ Code Refactoring" },
+    { "type": "tool", "section": "🛠 Tooling" },
+    { "type": "ux", "section": "🎨 UX Improvements" }
+  ],
+  "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+  "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
+  "userUrlFormat": "{{host}}/{{user}}",
+  "releaseCommitMessageFormat": "chore: release v{{currentTag}}",
+  "issuePrefixes": ["#"]
+}
