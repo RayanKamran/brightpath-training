@@ -3,7 +3,8 @@ export const API_BASE_URL = 'http://localhost:3000';
 export const API_TEST_HTTP = 'api-test.http';
 export const API_TEST_HTTP_EXAMPLE = 'api-test.http.example';
 
-export const BIN_BASH_PATH = '/bin/bash';
+// Windows has no /bin/bash; use the bash on PATH (Git Bash) there.
+export const BIN_BASH_PATH = process.platform === 'win32' ? 'bash' : '/bin/bash';
 
 export const DEFAULT_PAGE_SIZE = 50;
 export const DEFAULT_PAGE = 1;
