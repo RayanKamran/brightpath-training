@@ -1,0 +1,11 @@
+# Ignore build outputs and artifacts
+**/node_modules
+**/dist
+**/.nx
+**/out-tsc
+**/tmp
+**/coverage
+**/test-output
+**/playwright-report
+**/.vite
+**/build

@@ -1,0 +1,85 @@
+{
+  "appName": "DMS Sonix",
+  "appFullName": "Integrated Dealership System",
+  "loading": "Loading...",
+  "loadingLocation": "Loading location information...",
+  "noLocationAssigned": "No location assigned",
+  "save": "Save",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "delete": "Delete",
+  "edit": "Edit",
+  "create": "Create",
+  "update": "Update",
+  "close": "Close",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "submit": "Submit",
+  "reset": "Reset",
+  "search": "Search",
+  "filter": "Filter",
+  "clear": "Clear",
+  "apply": "Apply",
+  "yes": "Yes",
+  "no": "No",
+  "ok": "OK",
+  "retry": "Retry",
+  "refresh": "Refresh",
+  "export": "Export",
+  "import": "Import",
+  "download": "Download",
+  "upload": "Upload",
+  "print": "Print",
+  "share": "Share",
+  "copy": "Copy",
+  "paste": "Paste",
+  "actions": "Actions",
+  "viewDetails": "View Details",
+  "addNew": "Add New",
+  "error": "Error",
+  "success": "Success",
+  "warning": "Warning",
+  "info": "Information",
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to Home"
+  },
+  "unauthorized": "Unauthorized",
+  "forbidden": "Forbidden",
+  "serverError": "Server Error",
+  "auth": {
+    "signIn": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to access your account",
+      "button": "Sign In"
+    },
+    "callback": {
+      "completing": "Completing sign in..."
+    },
+    "errors": {
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "sessionInvalid": "Your session is no longer valid. Please sign in again.",
+      "noLocationsAssigned": "No locations are assigned to your account. Contact your administrator.",
+      "tenantAccessLost": "We couldn't verify your location access. Please sign in again.",
+      "authError": "There was a problem verifying your session. Please sign in again.",
+      "serviceUnavailable": "The authentication service is unavailable. Please try again or contact your administrator."
+    }
+  },
+  "offline": {
+    "noNetwork": "I'm not connected to a network. Check your internet connection and try again.",
+    "serverUnavailable": "You're connected to a network, but DMS Sonix is temporarily unavailable. Some features may not work correctly until the service is available again. Please try again. If the issue persists, contact your DMS administrator.",
+    "restored": "Connected successfully. I'm happy."
+  },
+  "errors": {
+    "unexpected": "Something went wrong. Try refreshing the page. If the issue persists, please contact your DMS administrator."
+  },
+  "comingSoon": {
+    "title": "Coming Soon",
+    "description": "This feature is under development."
+  },
+  "verifyingPermissions": "Please wait while we verify your permissions",
+  "loadingApp": "{{appName}} Loading",
+  "locationChangePrompt": "Changing the location will navigate away from this page and may result in any unsaved data being lost. Are you sure you want to proceed?"
+}

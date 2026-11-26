@@ -1,0 +1,1 @@
+export const RAVEN_DOCUMENT_STORE = Symbol('RAVEN_DOCUMENT_STORE');

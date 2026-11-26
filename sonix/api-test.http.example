@@ -1,0 +1,318 @@
+###
+# DMS AI Skeleton - API Testing with REST Client (EXAMPLE TEMPLATE)
+#
+# ⚠️  SETUP INSTRUCTIONS:
+# This is a template file. On first run, `npm run api:get-token` will automatically
+# create `api-test.http` from this template. The actual `api-test.http` file is
+# gitignored to prevent committing sensitive tokens to the repository.
+#
+# ⚡ QUICK START (Automated):
+# 1. Run: npm run api:get-token (auto-updates token below)
+# 2. Click "Send Request" above any ### section
+# 3. Done! Token refreshes automatically when expired.
+#
+# 📝 Manual Method (if you prefer):
+# 1. See Token Management section below
+# 2. Update @token variable manually
+# 3. Click "Send Request" on any endpoint
+###
+
+### Configuration
+# These values are for LOCAL development only. In production, these should be environment-specific
+@baseUrl = http://localhost:3000/api
+@logtoEndpoint = http://localhost:3001
+@appId = YOUR_LOGTO_APP_ID
+@redirectUri = http://localhost:3004/callback
+
+# Update this after getting a token (see Token Management section below)
+@token = YOUR_ACCESS_TOKEN_HERE
+
+# Location ID - Get this from /locations endpoint after authentication
+# Update with your actual location ID from the response
+@locationId = YOUR_LOCATION_ID_HERE
+
+### Test Users
+# These are populated from your local Logto instance
+# Configure actual values in your .env file:
+#   TEST_USER_EMAIL=your-test-user@example.com
+#   TEST_USER_PASSWORD=your-password
+#
+# For local development defaults, see .env.example
+# The npm scripts use environment variables automatically
+
+################################################################################
+# TOKEN MANAGEMENT
+#
+# To get an access token, you need to:
+# 1. Generate PKCE challenge (Step 1)
+# 2. Get authorization URL (Step 2)
+# 3. Open URL in browser and sign in
+# 4. Copy the 'code' from callback URL
+# 5. Exchange code for token (Step 3)
+################################################################################
+
+### Step 1: Generate PKCE Challenge
+# @name generateChallenge
+GET https://www.random.org/strings/?num=1&len=64&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new
+###
+
+### Step 2: Create Authorization URL
+# Copy the verifier from Step 1, then compute the challenge:
+# In your terminal, run:
+#   echo -n "YOUR_VERIFIER_HERE" | openssl dgst -binary -sha256 | openssl base64 | tr '+/' '-_' | tr -d '='
+#
+# Or use this online tool: https://tonyxu-io.github.io/pkce-generator/
+#
+# Store your values:
+@codeVerifier = PASTE_YOUR_CODE_VERIFIER_HERE
+@codeChallenge = PASTE_YOUR_CODE_CHALLENGE_HERE
+@state = random_state_string_12345
+
+# Copy this URL and open it in your browser:
+# {{logtoEndpoint}}/oidc/auth?client_id={{appId}}&redirect_uri={{redirectUri}}&response_type=code&scope=openid%20profile%20email%20offline_access&state={{state}}&code_challenge={{codeChallenge}}&code_challenge_method=S256
+
+### Step 3: Exchange Authorization Code for Token
+# After signing in, copy the 'code' parameter from the callback URL
+# Paste it below and send this request
+@authorizationCode = PASTE_CODE_FROM_CALLBACK_URL_HERE
+
+# @name getToken
+POST {{logtoEndpoint}}/oidc/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&code={{authorizationCode}}
+&redirect_uri={{redirectUri}}
+&client_id={{appId}}
+&code_verifier={{codeVerifier}}
+
+### Extract token from response (uncomment and update @token at top)
+# Copy the access_token from the response above and update @token variable
+
+################################################################################
+# PUBLIC ENDPOINTS (No Authentication Required)
+################################################################################
+
+### Health Check - Ping
+GET {{baseUrl}}/SystemHealth/ping
+
+### Health Check - Server Time
+GET {{baseUrl}}/SystemHealth/server-time
+
+################################################################################
+# PROTECTED ENDPOINTS (Authentication Required)
+################################################################################
+
+################################################################################
+# USER ENDPOINTS
+################################################################################
+
+### Get User Profile
+GET {{baseUrl}}/user/profile
+Authorization: Bearer {{token}}
+
+### Register New User (Public - No Auth Required)
+POST {{baseUrl}}/user/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "SecurePassword123!",
+  "firstName": "New",
+  "lastName": "User"
+}
+
+################################################################################
+# LOCATION ENDPOINTS
+################################################################################
+
+### Get User Locations
+GET {{baseUrl}}/locations
+Authorization: Bearer {{token}}
+
+### Get Location Cache Info
+GET {{baseUrl}}/locations/cache/info
+Authorization: Bearer {{token}}
+
+### Refresh Location Cache
+POST {{baseUrl}}/locations/cache/refresh
+Authorization: Bearer {{token}}
+
+### Get All Database Locations (Admin)
+GET {{baseUrl}}/locations/db
+Authorization: Bearer {{token}}
+
+### Get All Database Locations (with filters)
+GET {{baseUrl}}/locations/db?page=1&pageSize=10&searchTerm=LOC
+Authorization: Bearer {{token}}
+
+### Get Specific Database Location by ID
+# Replace with actual UUID from locations list
+GET {{baseUrl}}/locations/db/YOUR_LOCATION_UUID_HERE
+Authorization: Bearer {{token}}
+
+### Create Database Location
+POST {{baseUrl}}/locations/db
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "TEST-LOC-001",
+  "displayName": "Test Location",
+  "logtoId": "test-logto-id",
+  "description": "Test location created via REST Client",
+  "active": true
+}
+
+### Sync All Logto Organizations to Database
+POST {{baseUrl}}/locations/sync/from-logto
+Authorization: Bearer {{token}}
+
+### Get Location by ID
+# Replace with actual UUID from locations list
+GET {{baseUrl}}/locations/YOUR_LOCATION_UUID_HERE
+Authorization: Bearer {{token}}
+
+### Verify User Access to Location
+# Replace with actual UUID from locations list
+POST {{baseUrl}}/locations/YOUR_LOCATION_UUID_HERE/verify-access
+Authorization: Bearer {{token}}
+
+### Update Database Location
+# Replace with actual UUID from locations list
+PATCH {{baseUrl}}/locations/db/YOUR_LOCATION_UUID_HERE
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "displayName": "Updated Location Name",
+  "description": "Updated description",
+  "active": true
+}
+
+### Delete Database Location (Soft Delete)
+# Replace with actual UUID from locations list
+DELETE {{baseUrl}}/locations/db/YOUR_LOCATION_UUID_HERE
+Authorization: Bearer {{token}}
+
+################################################################################
+# BIN ENDPOINTS
+################################################################################
+
+### Get all Bins
+GET {{baseUrl}}/bins
+Authorization: Bearer {{token}}
+
+### Get Bins (with pagination)
+GET {{baseUrl}}/bins?page=1&pageSize=10
+Authorization: Bearer {{token}}
+
+### Get Bins (with search)
+GET {{baseUrl}}/bins?searchTerm=test
+Authorization: Bearer {{token}}
+
+### Get specific Bin by ID
+# Replace with actual UUID from the bins list
+GET {{baseUrl}}/bins/YOUR_BIN_UUID_HERE
+Authorization: Bearer {{token}}
+
+### Create Bin
+POST {{baseUrl}}/bins
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "TEST-BIN-001",
+  "description": "Test bin created via REST Client",
+  "locationId": "{{locationId}}"
+}
+
+################################################################################
+# PART ENDPOINTS
+################################################################################
+
+### Get all Parts (requires locationId)
+GET {{baseUrl}}/parts?locationId={{locationId}}
+Authorization: Bearer {{token}}
+
+### Get Parts (with pagination)
+GET {{baseUrl}}/parts?locationId={{locationId}}&page=1&pageSize=10
+Authorization: Bearer {{token}}
+
+### Get Parts (with search)
+GET {{baseUrl}}/parts?locationId={{locationId}}&searchTerm=filter
+Authorization: Bearer {{token}}
+
+### Get specific Part by ID
+# Replace with actual UUID from the parts list
+GET {{baseUrl}}/parts/YOUR_PART_UUID_HERE
+Authorization: Bearer {{token}}
+
+### Get Vendor Part Numbers
+# Replace YOUR_VENDOR_UUID_HERE with actual vendor ID
+GET {{baseUrl}}/parts/vendor-part-numbers?vendorId=YOUR_VENDOR_UUID_HERE
+Authorization: Bearer {{token}}
+
+################################################################################
+# VENDOR ENDPOINTS
+################################################################################
+
+### Get all Vendors
+GET {{baseUrl}}/vendors
+Authorization: Bearer {{token}}
+
+### Get Vendors (with pagination)
+GET {{baseUrl}}/vendors?page=1&pageSize=10
+Authorization: Bearer {{token}}
+
+### Get Vendors (with search)
+GET {{baseUrl}}/vendors?searchTerm=tech
+Authorization: Bearer {{token}}
+
+### Get specific Vendor by ID
+# Replace with actual UUID from the vendors list
+GET {{baseUrl}}/vendors/YOUR_VENDOR_UUID_HERE
+Authorization: Bearer {{token}}
+
+### Create Vendor
+POST {{baseUrl}}/vendors
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vendorNumber": "TEST-VENDOR-001",
+  "name": "Test Vendor Inc.",
+  "locationId": "{{locationId}}"
+}
+
+################################################################################
+# ADVANCED: Query Examples
+################################################################################
+
+### Parts - Complex Query
+GET {{baseUrl}}/parts?locationId={{locationId}}&page=1&pageSize=20&searchTerm=oil
+Authorization: Bearer {{token}}
+
+### Bins - Filtered and Paginated
+GET {{baseUrl}}/bins?locationId={{locationId}}&pageSize=50&searchTerm=A
+Authorization: Bearer {{token}}
+
+################################################################################
+# NOTES
+################################################################################
+#
+# Token Expiration:
+# - Access tokens typically expire in 1 hour
+# - If you get 401 errors, repeat the token acquisition process
+#
+# Location Context:
+# - Your token is associated with specific Logto Organizations (locations)
+# - API calls are filtered by your current location
+# - Use the location switcher in the UI to change locations
+#
+# Testing Different Users:
+# - Sign out in browser (http://localhost:3004)
+# - Repeat token acquisition with different user credentials
+# - Or use Incognito/Private browsing mode
+#
+################################################################################

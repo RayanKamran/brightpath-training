@@ -1,0 +1,40 @@
+{
+  "name": "@dms-sonix/client-web-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@dms-sonix/client-web"
+    ],
+    "targets": {
+      "e2e:ui": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "apps/client-web-e2e",
+          "command": "playwright test --ui"
+        }
+      },
+      "e2e:chromium": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "apps/client-web-e2e",
+          "command": "playwright test --project=chromium"
+        }
+      },
+      "e2e:chromium:ui": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "apps/client-web-e2e",
+          "command": "playwright test --project=chromium --ui"
+        }
+      },
+      "e2e:headed": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "apps/client-web-e2e",
+          "command": "playwright test --headed"
+        }
+      }
+    }
+  }
+}

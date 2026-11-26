@@ -1,0 +1,84 @@
+services:
+  logto_svc:
+    image: svhd/logto:1.36.0
+    platform: linux/amd64
+    container_name: logto_svc_aiws
+    depends_on:
+      postgres:
+        condition: service_healthy # Wait for Postgres healthcheck before starting
+    entrypoint: [ "sh", "-c", "npm run cli db seed -- --swe && npm start" ]
+    ports:
+      - "3001:3001" # Logto core API port
+      - "3002:3002" # Logto Admin Console port
+    environment:
+      - TRUST_PROXY_HEADER=1 # Trust reverse proxies (Logto setting)
+      - DB_URL=postgres://${LOGTO_DB_USER}:${LOGTO_DB_PASSWORD}@postgres:${LOGTO_DB_PORT}/${LOGTO_DB_NAME}
+      # ENDPOINT=                   # (optional) e.g., https://auth.myapp.com for production
+      # ADMIN_ENDPOINT=             # (optional) e.g., https://admin.myapp.com for production
+
+  postgres:
+    image: postgres:18.3-alpine # Postgres used by Logto only
+    container_name: postgres_aiws
+    user: postgres
+    environment:
+      POSTGRES_USER: ${LOGTO_DB_USER}
+      POSTGRES_PASSWORD: ${LOGTO_DB_PASSWORD}
+      POSTGRES_DB: ${LOGTO_DB_NAME}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${LOGTO_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "${LOGTO_DB_HOST_PORT}:5432" # Expose PostgreSQL on host (5433 avoids conflict with other local Postgres instances)
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persistent volume for Logto database
+    restart: unless-stopped
+
+  ravendb:
+    image: ravendb/ravendb:7.2-ubuntu-latest
+    platform: linux/amd64
+    container_name: ravendb_aiws
+    environment:
+      - RAVEN_Setup_Mode=None
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork # Dev-only HTTP; localhost-only exposure is enforced by port binding below
+      - RAVEN_License_Eula_Accepted=true
+      - RAVEN_ARGS=--ServerUrl=http://0.0.0.0:3333 --PublicServerUrl=http://localhost:3333 --DataDir=/var/lib/ravendb/data
+    ports:
+      - "127.0.0.1:${RAVENDB_PORT}:3333"
+    volumes:
+      - ravendb_data:/var/lib/ravendb/data
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:latest # Mailpit - Email testing for developers
+    container_name: mailpit_aiws
+    ports:
+      - "8025:8025" # Web UI for viewing emails
+      - "1025:1025" # SMTP server (for sending emails)
+    environment:
+      - MP_MAX_MESSAGES=5000 # Maximum number of messages to store
+      - MP_SMTP_AUTH_ACCEPT_ANY=1 # Accept any username/password for SMTP
+      - MP_SMTP_AUTH_ALLOW_INSECURE=1 # Allow insecure authentication
+    restart: unless-stopped
+
+#  mssql:
+#    image: mcr.microsoft.com/mssql/server:2022-latest # SQL Server 2022 (Linux) image[1](https://infinityflame.co.uk/featured/running-sql-server-2022-database-in-docker-using-docker-compose/)
+#    platform: linux/amd64 # Let's Docker on MacOS run MSSQL process
+#    container_name: mssql # (Optional) Container name for easier reference
+#    ports:
+#      - "1433:1433" # Expose SQL Server port 1433 to host[1](https://infinityflame.co.uk/featured/running-sql-server-2022-database-in-docker-using-docker-compose/)
+#    environment:
+#      - ACCEPT_EULA=Y # Accept the SQL Server EULA[3](https://m7y.me/post/2024-04-05-sql-server-with-docker-compose/)
+#      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD} # SA user password (strong! defined in .env)[3](https://m7y.me/post/2024-04-05-sql-server-with-docker-compose/)
+#      - MSSQL_PID=Developer # SQL edition: Developer (for full features in dev)[3](https://m7y.me/post/2024-04-05-sql-server-with-docker-compose/)
+#      - MSSQL_BACKUP_DIR=/var/opt/mssql/backups # Inside-container path for backups (.bak)[3](https://m7y.me/post/2024-04-05-sql-server-with-docker-compose/)
+#    volumes:
+#      - mssql_data:/var/opt/mssql # Named volume for all SQL data (data, logs, etc.)[2](https://learn.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver17)
+#      - ./mssql/backups:/var/opt/mssql/backups # Bind-mount host's backup folder into container[3](https://m7y.me/post/2024-04-05-sql-server-with-docker-compose/)
+#    restart: unless-stopped # (Optional) Always restart unless stopped manually
+
+volumes:
+  pgdata: # Named volume for PostgreSQL data (Logto)
+  ravendb_data: # Named volume for RavenDB data (DMS Sonix app)
+#  mssql_data: # Named volume for SQL Server data

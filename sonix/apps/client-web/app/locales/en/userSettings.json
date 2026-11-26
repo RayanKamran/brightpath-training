@@ -1,0 +1,14 @@
+{
+  "title": "User Settings",
+  "profileInfo": "Profile Information",
+  "userId": "User ID",
+  "username": "Username",
+  "name": "Name",
+  "email": "Email",
+  "phoneNumber": "Phone Number",
+  "verified": "Verified",
+  "accountCreated": "Account Created",
+  "lastUpdated": "Last Updated",
+  "notAvailable": "N/A",
+  "managedByLogto": "User information is managed through your Logto account. Changes to your profile must be made through the Logto authentication service."
+}

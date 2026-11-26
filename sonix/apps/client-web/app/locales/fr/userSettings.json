@@ -1,0 +1,14 @@
+{
+  "title": "Paramètres Utilisateur",
+  "profileInfo": "Informations de Profil",
+  "userId": "ID Utilisateur",
+  "username": "Nom d'Utilisateur",
+  "name": "Nom",
+  "email": "E-mail",
+  "phoneNumber": "Numéro de Téléphone",
+  "verified": "Vérifié",
+  "accountCreated": "Compte Créé",
+  "lastUpdated": "Dernière Mise à Jour",
+  "notAvailable": "N/D",
+  "managedByLogto": "Les informations utilisateur sont gérées via votre compte Logto. Les modifications de votre profil doivent être effectuées via le service d'authentification Logto."
+}

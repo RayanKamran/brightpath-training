@@ -1,0 +1,45 @@
+{
+  "title": "Users",
+  "search": "Search users...",
+  "noResults": "No users found",
+  "usersFound": "users found",
+  "userNotFound": "User not found",
+  "backToUsers": "Back to Users",
+  "saving": "Saving...",
+  "cancel": "Cancel",
+  "updateSuccess": "User profile updated successfully.",
+  "unsavedChanges": {
+    "editMessage": "Changes made to this user profile will be lost. Are you sure you want to cancel?"
+  },
+  "pageTitle": {
+    "edit": "Edit User Profile",
+    "save": "Save Changes"
+  },
+  "userList": {
+    "displayName": "Name",
+    "email": "Email",
+    "username": "Username",
+    "lastLogin": "Last Login",
+    "profileCompleteness": "Profile"
+  },
+  "fields": {
+    "logtoUserId": "Logto User ID",
+    "email": "Email",
+    "username": "Username",
+    "displayName": "Display Name",
+    "nickname": "Nickname",
+    "bio": "Bio",
+    "timezone": "Timezone",
+    "preferredLanguage": "Preferred Language",
+    "lastLoginAt": "Last Login",
+    "profileCompleteness": "Profile Completeness",
+    "readOnlyHint": "This field is managed by Logto and cannot be edited here."
+  },
+  "notifications": {
+    "sectionTitle": "Notification Preferences",
+    "emailNotifications": "Email Notifications",
+    "smsNotifications": "SMS Notifications",
+    "marketingEmails": "Marketing Emails"
+  },
+  "never": "Never"
+}
