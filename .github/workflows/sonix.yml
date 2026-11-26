@@ -30,7 +30,8 @@ jobs:
       - run: git log -1 --format='%H %s'
       - run: npm run lint:ci
       - run: npm run typecheck
-      - name: Unit tests (api, excluding the locked properties, which have their own job)
+      # typecheck above builds @dms/data-models, which the api tests (and the locked properties) import.
+      - name: API tests, including the locked properties
         working-directory: sonix/apps/sonix-apis
-        run: npx vitest run --exclude 'src/part/__properties__/**'
+        run: npx vitest run
       - run: npm run test:web
