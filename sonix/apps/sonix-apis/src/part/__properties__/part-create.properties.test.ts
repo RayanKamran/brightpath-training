@@ -13,7 +13,7 @@ import {BadRequestException, ConflictException, NotFoundException} from '@nestjs
 import {plainToInstance} from 'class-transformer';
 import {validate} from 'class-validator';
 import fc from 'fast-check';
-import {describe, expect, it} from 'vitest';
+import {describe, expect, it, vi} from 'vitest';
 import type {RavenDocumentStoreProvider} from '../../infrastructure/ravendb/document-store.provider';
 import type {RavenSessionFactory} from '../../infrastructure/ravendb/session-factory';
 import {PartCreateDto} from '../dto/part-create.dto';
@@ -21,6 +21,8 @@ import {PartService} from '../part.service';
 
 const NUM_RUNS = 1000;
 const run = {numRuns: NUM_RUNS};
+// 1000 cases per property take ~25 s; vitest's default 5 s timeout would cut them off.
+vi.setConfig({testTimeout: 180_000});
 
 // ── In-memory world: vendors, a location and its bins (spec 201-211, 788-823) ─────────────────
 
@@ -67,6 +69,8 @@ function fakeSession(docs: Map<string, Doc>) {
   const pending = new Map<string, Doc>();
   return {
     async load(idOrIds: string | string[]) {
+      // Yield to the event loop so vitest's worker can answer its RPC heartbeats.
+      await new Promise((resolve) => setImmediate(resolve));
       if (Array.isArray(idOrIds)) {
         return Object.fromEntries(idOrIds.map((id) => [id, clone(docs.get(id)) ?? null]));
       }

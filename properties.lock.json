@@ -10,7 +10,7 @@
     "scripts/property_lock.py"
   ],
   "files": {
-    "sonix/apps/sonix-apis/src/part/__properties__/part-create.properties.test.ts": "b0f00da7fd8b17479dbb55be563618cb3648db8a4125c37f537f6b983eab9abc",
+    "sonix/apps/sonix-apis/src/part/__properties__/part-create.properties.test.ts": "35b1c9b58ff016868260bb732d14db9724f4e06bc5756efd593629240a9dab92",
     "docs/properties/part-create.md": "2e90d06a3cc6f02e099d2f84230786ae6b86c00605c90c601a52a06fcb6e7b2b",
     "docs/property-testing.md": "a233d4f35028cefe0dfe87e36a9da160c23035c09392757a52b8a258933ac661",
     ".github/workflows/properties.yml": "eee15155e1bcc5324bd7c8cb511751c8aa5825be9bef1389f8c7bfc7f1145d04",
