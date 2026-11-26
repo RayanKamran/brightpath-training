@@ -1,0 +1,74 @@
+# Property tests (HW6 Part 1b). See docs/property-testing.md.
+#
+# property-lock  runs from the BASE branch (pull_request_target), so a pull request cannot edit the
+#                check that judges it. It never runs PR code: it only hashes the PR's files and
+#                compares them with the base branch's properties.lock.json.
+# property-tests runs the locked fast-check properties on the PR's exact head commit, every push.
+# Both are required checks: red blocks the merge.
+name: properties
+
+on:
+  pull_request:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  property-lock:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the base branch (trusted lock + script)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+      - name: Check out the PR head as data (never executed)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: head
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Locked property files unchanged against the base lock
+        run: |
+          if [ ! -f base/properties.lock.json ]; then
+            echo "Base branch has no property lock yet: nothing to enforce."; exit 0
+          fi
+          echo "head commit: ${{ github.event.pull_request.head.sha }}"
+          python base/scripts/property_lock.py verify --lock base/properties.lock.json --tree head
+
+  property-tests:
+    if: github.event_name != 'pull_request_target'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sonix
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The PR's own head commit, not GitHub's merge preview, so "tests ran on the final
+          # commit" can be read straight off the log.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: sonix/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: Build the shared data-models package the tests import
+        run: npx tsc --build libs/shared/data-models/tsconfig.lib.json
+      - name: Commit under test
+        run: git log -1 --format='%H %s'
+      - name: Property lock matches this commit's own lock
+        run: python3 ../scripts/property_lock.py verify --tree ..
+      - name: Locked property tests (fast-check, 1000 cases each)
+        working-directory: sonix/apps/sonix-apis
+        run: npx vitest run src/part/__properties__

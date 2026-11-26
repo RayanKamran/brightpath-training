@@ -1,0 +1,22 @@
+{
+  "protected": [
+    "sonix/apps/sonix-apis/src/part/__properties__/",
+    "docs/properties/",
+    "docs/property-testing.md",
+    ".github/workflows/properties.yml",
+    ".claude/settings.json",
+    ".claude/hooks/guard_properties.py",
+    ".claude/hooks/run_properties.py",
+    "scripts/property_lock.py"
+  ],
+  "files": {
+    "sonix/apps/sonix-apis/src/part/__properties__/part-create.properties.test.ts": "35b1c9b58ff016868260bb732d14db9724f4e06bc5756efd593629240a9dab92",
+    "docs/properties/part-create.md": "2e90d06a3cc6f02e099d2f84230786ae6b86c00605c90c601a52a06fcb6e7b2b",
+    "docs/property-testing.md": "a233d4f35028cefe0dfe87e36a9da160c23035c09392757a52b8a258933ac661",
+    ".github/workflows/properties.yml": "86fd363cf8909ff0ee631fab605f872fe1d5a2fce1d9409170ff32f3073af5bc",
+    ".claude/settings.json": "72022e3d17e4f139eafe745a78bfeae0636fa4a10d31ad080b67297705fca13b",
+    ".claude/hooks/guard_properties.py": "ad40d3f81da81563aac49d7d955bfd2ef347d2a9a080cb8ed351031c3c214d21",
+    ".claude/hooks/run_properties.py": "fe06b242da35f167d2f20b3ca0d49f84d8b8a1de1b873dbf60bb935ce14b9a2e",
+    "scripts/property_lock.py": "98ddce0139a38d446870f74aec60e392ad2193d9624d00df0ee3541d5aae5fb8"
+  }
+}
