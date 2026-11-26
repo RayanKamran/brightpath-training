@@ -63,6 +63,8 @@ jobs:
           cache: npm
           cache-dependency-path: sonix/package-lock.json
       - run: npm ci --no-audit --no-fund
+      - name: Build the shared data-models package the tests import
+        run: npx tsc --build libs/shared/data-models/tsconfig.lib.json
       - name: Commit under test
         run: git log -1 --format='%H %s'
       - name: Property lock matches this commit's own lock
