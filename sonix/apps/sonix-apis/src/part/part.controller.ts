@@ -1,6 +1,10 @@
 import type {PagedResponseDto} from '@dms/data-models';
-import {Controller, Get, Param, Query} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, Res} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import type {Response} from 'express';
+import {Auth} from '../auth/auth.decorator';
+import {AuthInfo} from '../auth/auth-utils';
+import {PartCreateDto, PartCreateResponseDto} from './dto/part-create.dto';
 import {PartDetailResponseDto} from './dto/part-detail.dto';
 import {PartListQueryDto, PartWithInventoryResponseDto} from './dto/part-list.query.dto';
 import {PartService} from './part.service';
@@ -26,6 +30,29 @@ export class PartController {
     @Query() query: PartListQueryDto,
   ): Promise<PagedResponseDto<PartWithInventoryResponseDto>> {
     return await this._partService.findAllWithInventory(query);
+  }
+
+  /**
+   * POST /api/parts
+   */
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Create part',
+    description: 'Create a part with its vendors and, optionally, inventory at one location.',
+  })
+  @ApiResponse({status: 201, description: 'Part created', type: PartCreateResponseDto})
+  @ApiResponse({status: 400, description: 'Invalid input or a vendor/bin rule broken'})
+  @ApiResponse({status: 404, description: 'Location not found'})
+  @ApiResponse({status: 409, description: 'Part already exists'})
+  public async create(
+    @Body() dto: PartCreateDto,
+    @Auth() auth: AuthInfo,
+    @Res({passthrough: true}) res: Response,
+  ): Promise<PartCreateResponseDto> {
+    const created = await this._partService.create(dto, auth.sub);
+    res.setHeader('Location', `/api/parts/${encodeURIComponent(created.partNumber)}`);
+    return created;
   }
 
   /**

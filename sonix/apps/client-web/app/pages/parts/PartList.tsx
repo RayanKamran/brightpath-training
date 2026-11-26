@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
@@ -253,6 +254,15 @@ export default function PartsPage() {
             }}
             sx={{flex: 1}}
           />
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => navigate('/parts/create')}
+            data-testid="part-create-button"
+            sx={{textTransform: 'none', boxShadow: 'none', whiteSpace: 'nowrap'}}
+          >
+            {tParts('create.newPart')}
+          </Button>
         </Box>
 
         {/* ── DataGrid ── */}

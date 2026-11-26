@@ -42,7 +42,9 @@
       "availability": "Availability",
       "shipping": "Shipping",
       "restocking": "Restocking Parameters",
-      "vendors": "Vendors"
+      "vendors": "Vendors",
+      "maintenance": "Part maintenance",
+      "uom": "Unit of measure"
     },
     "fields": {
       "partId": "Part ID",
@@ -87,7 +89,19 @@
       "minDays": "Min Days",
       "minOrder": "Min Order",
       "promptForSerialNumber": "Prompt for serial number",
-      "bypassPriceUpdate": "Bypass price update"
+      "bypassPriceUpdate": "Bypass price update",
+      "partNumber": "Part ID",
+      "taxCode": "Tax code",
+      "sellUom": "Sales UOM",
+      "salePurchaseRatio": "Sales/purchase ratio",
+      "pogNumber": "POG #",
+      "popCode": "POP code",
+      "serialized": "Prompt for serial number",
+      "onHandQty": "Initial on hand",
+      "vendorNumber": "Vendor #",
+      "vendorPartNumber": "Vendor part #",
+      "cost": "Cost ($)",
+      "primary": "Primary"
     },
     "vendors": {
       "searchPlaceholder": "Search vendors by code or name...",
@@ -122,7 +136,15 @@
       "invalidNumber": "Must be a valid number.",
       "shippingUnitRequired": "Shipping unit is required when weight is entered.",
       "validationSummary": "Please correct the following fields: {{fields}}"
-    }
+    },
+    "newPart": "New part",
+    "saving": "Saving...",
+    "success": "Part created",
+    "unsavedChanges": "You have unsaved changes. Leave this page?",
+    "availabilityNote": "Committed, on order and backordered start at zero. On hand starts at the value below.",
+    "addVendor": "Add vendor",
+    "removeVendor": "Remove vendor",
+    "noVendors": "Add at least one vendor. The first one added is the primary vendor."
   },
   "edit": {
     "breadcrumbEdit": "Edit",
