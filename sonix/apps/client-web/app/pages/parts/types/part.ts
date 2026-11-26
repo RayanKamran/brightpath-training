@@ -116,3 +116,39 @@ export type PartDetailBin = {
   description: string | null;
   isMain: boolean;
 };
+
+/** POST /parts payload. Money fields are cents. */
+export type PartCreateInput = {
+  partNumber: string;
+  description: string;
+  status?: string;
+  vendors: Array<{
+    vendorNumber: string;
+    vendorPartNumber?: string;
+    isPrimary: boolean;
+    cost?: number;
+  }>;
+  locationId?: string;
+  onHandQty?: number;
+  listPrice?: number;
+  sellUom?: string;
+  purchaseUom?: string;
+  salePurchaseRatio?: number;
+  priceGroup?: string;
+  glGroup?: string;
+  taxCode?: string;
+  shippingWeight?: number;
+  shippingUnit?: string;
+  caseQty?: number;
+  minQty?: number;
+  maxQty?: number;
+  minDays?: number;
+  minOrder?: number;
+  pogNumber?: string;
+  popCode?: string;
+  comments?: string;
+  serialized?: boolean;
+  bypassPriceUpdate?: boolean;
+};
+
+export type PartCreateResult = {partNumber: string; description: string; locationId: string | null};

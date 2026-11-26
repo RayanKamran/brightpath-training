@@ -130,4 +130,22 @@ describe('PartController', () => {
       await expect(controller.findOne(partId)).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('create', () => {
+    it('creates through the service with the caller as author and sets Location', async () => {
+      partServiceMock.create.mockResolvedValue({
+        partNumber: 'BRK 1',
+        description: 'Pad',
+        locationId: null,
+      });
+      const res = {setHeader: vi.fn()};
+      const dto = {partNumber: 'BRK 1', description: 'Pad', vendors: []} as never;
+
+      const result = await controller.create(dto, {sub: 'user-1'} as never, res as never);
+
+      expect(partServiceMock.create).toHaveBeenCalledWith(dto, 'user-1');
+      expect(res.setHeader).toHaveBeenCalledWith('Location', '/api/parts/BRK%201');
+      expect(result.partNumber).toBe('BRK 1');
+    });
+  });
 });

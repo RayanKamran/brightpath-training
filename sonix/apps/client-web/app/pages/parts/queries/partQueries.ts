@@ -1,8 +1,18 @@
 import {API_CONFIG} from 'core/config/api';
 import {apiClient} from 'core/services/apiClient';
-import type {PartDetail, PartListResponse, PartSearchCriteria} from '../types/part';
+import type {
+  PartCreateInput,
+  PartCreateResult,
+  PartDetail,
+  PartListResponse,
+  PartSearchCriteria,
+} from '../types/part';
 
 export const partQueries = {
+  create: async (input: PartCreateInput, token: string): Promise<PartCreateResult> => {
+    return apiClient.post<PartCreateResult>(`${API_CONFIG.baseUrl}/parts`, input, {token});
+  },
+
   fetchAll: async (searchCriteria: PartSearchCriteria): Promise<PartListResponse> => {
     const params = new URLSearchParams();
     params.set('locationId', searchCriteria.locationId);

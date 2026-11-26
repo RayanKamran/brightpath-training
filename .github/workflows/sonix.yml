@@ -1,0 +1,36 @@
+# sonix's own checks. Its husky pre-commit hook does not run inside this repo, so CI runs them.
+name: sonix
+
+on:
+  pull_request:
+    paths: ["sonix/**", ".github/workflows/sonix.yml"]
+  push:
+    branches: [master]
+    paths: ["sonix/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  sonix-checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sonix
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: sonix/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: git log -1 --format='%H %s'
+      - run: npm run lint:ci
+      - run: npm run typecheck
+      - name: Unit tests (api, excluding the locked properties, which have their own job)
+        working-directory: sonix/apps/sonix-apis
+        run: npx vitest run --exclude 'src/part/__properties__/**'
+      - run: npm run test:web

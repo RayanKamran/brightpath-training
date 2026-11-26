@@ -1,5 +1,5 @@
 import type {PagedResponseDto} from '@dms/data-models';
-import {NotFoundException} from '@nestjs/common';
+import {BadRequestException, ConflictException, NotFoundException} from '@nestjs/common';
 import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {RavenDocumentStoreProvider} from '../../infrastructure/ravendb/document-store.provider';
 import {RavenSessionFactory} from '../../infrastructure/ravendb/session-factory';
@@ -156,6 +156,65 @@ describe('PartService', () => {
 
       expect(queryChain.skip).toHaveBeenCalledWith(0);
       expect(queryChain.take).toHaveBeenCalledWith(50);
+    });
+  });
+
+  describe('create', () => {
+    const vendor = {id: 'vendors/V1', vendorNumber: 'V1', name: 'Vendor One'};
+    const dto = (overrides: Record<string, unknown> = {}) =>
+      ({
+        partNumber: 'BRK-1',
+        description: 'Brake pad',
+        vendors: [{vendorNumber: 'V1', isPrimary: true, cost: 1299}],
+        ...overrides,
+      }) as never;
+
+    it('stores parts/{partNumber} once with cost in cents and avgCost from the primary vendor', async () => {
+      session.load.mockImplementation(async (ids: string | string[]) =>
+        Array.isArray(ids) ? {'vendors/V1': vendor} : null,
+      );
+
+      const result = await service.create(dto(), 'user-1');
+
+      expect(result).toEqual({partNumber: 'BRK-1', description: 'Brake pad', locationId: null});
+      expect(session.store).toHaveBeenCalledTimes(1);
+      const [stored, id] = session.store.mock.calls[0];
+      expect(id).toBe('parts/BRK-1');
+      expect(stored.vendors[0].cost).toEqual({amount: 1299, currency: 'USD'});
+      expect(stored.avgCost).toEqual({amount: 1299, currency: 'USD'});
+      expect(stored.status).toBe(PartStatus.Active);
+      expect(stored.createdBy).toBe('user-1');
+      expect(session.saveChanges).toHaveBeenCalledTimes(1);
+    });
+
+    it('is 409 when a live part already has the number', async () => {
+      session.load.mockResolvedValue(mockPart({id: 'parts/BRK-1', partNumber: 'BRK-1'}));
+      await expect(service.create(dto(), 'user-1')).rejects.toThrow(ConflictException);
+      expect(session.store).not.toHaveBeenCalled();
+    });
+
+    it('is 400 for an unknown vendor, before writing', async () => {
+      session.load.mockImplementation(async (ids: string | string[]) =>
+        Array.isArray(ids) ? {'vendors/V1': null} : null,
+      );
+      await expect(service.create(dto(), 'user-1')).rejects.toThrow(BadRequestException);
+      expect(session.store).not.toHaveBeenCalled();
+    });
+
+    it('is 400 when maxQty < minQty, without touching the database', async () => {
+      await expect(service.create(dto({minQty: 5, maxQty: 2}), 'user-1')).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(session.load).not.toHaveBeenCalled();
+    });
+
+    it('is 404 for an unknown location', async () => {
+      session.load.mockImplementation(async (ids: string | string[]) =>
+        Array.isArray(ids) ? {'vendors/V1': vendor} : null,
+      );
+      await expect(service.create(dto({locationId: 'LOC_NOPE'}), 'user-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });

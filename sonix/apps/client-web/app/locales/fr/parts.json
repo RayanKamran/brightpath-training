@@ -42,7 +42,9 @@
       "availability": "Disponibilité",
       "shipping": "Expédition",
       "restocking": "Paramètres de Réapprovisionnement",
-      "vendors": "Fournisseurs"
+      "vendors": "Fournisseurs",
+      "maintenance": "Gestion de la pièce",
+      "uom": "Unité de mesure"
     },
     "fields": {
       "partId": "ID de Pièce",
@@ -87,7 +89,19 @@
       "minDays": "Jours Min",
       "minOrder": "Commande Min",
       "promptForSerialNumber": "Demander le numéro de série",
-      "bypassPriceUpdate": "Ignorer la mise à jour du prix"
+      "bypassPriceUpdate": "Ignorer la mise à jour du prix",
+      "partNumber": "No de pièce",
+      "taxCode": "Code de taxe",
+      "sellUom": "UM de vente",
+      "salePurchaseRatio": "Ratio vente/achat",
+      "pogNumber": "No POG",
+      "popCode": "Code POP",
+      "serialized": "Demander le numéro de série",
+      "onHandQty": "En stock initial",
+      "vendorNumber": "No fournisseur",
+      "vendorPartNumber": "No pièce fournisseur",
+      "cost": "Coût ($)",
+      "primary": "Principal"
     },
     "vendors": {
       "searchPlaceholder": "Rechercher des fournisseurs par code ou nom...",
@@ -122,7 +136,15 @@
       "invalidNumber": "Doit être un nombre valide.",
       "shippingUnitRequired": "L'unité d'expédition est requise lorsqu'un poids est saisi.",
       "validationSummary": "Veuillez corriger les champs suivants : {{fields}}"
-    }
+    },
+    "newPart": "Nouvelle pièce",
+    "saving": "Enregistrement...",
+    "success": "Pièce créée",
+    "unsavedChanges": "Vous avez des modifications non enregistrées. Quitter cette page ?",
+    "availabilityNote": "Engagé, en commande et en rupture commencent à zéro. Le stock initial est saisi ci-dessous.",
+    "addVendor": "Ajouter un fournisseur",
+    "removeVendor": "Retirer le fournisseur",
+    "noVendors": "Ajoutez au moins un fournisseur. Le premier ajouté est le fournisseur principal."
   },
   "edit": {
     "breadcrumbEdit": "Modifier",

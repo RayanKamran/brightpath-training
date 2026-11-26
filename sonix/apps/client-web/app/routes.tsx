@@ -14,6 +14,7 @@ export default [
       // Parts
       ...prefix('parts', [
         index('./pages/parts/PartList.tsx'),
+        route('create', './pages/parts/PartCreate.tsx'),
         route(':partNumber', './pages/parts/PartDetail.tsx'),
       ]),
 
