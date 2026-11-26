@@ -32,7 +32,7 @@ services:
     ports:
       - "${LOGTO_DB_HOST_PORT}:5432" # Expose PostgreSQL on host (5433 avoids conflict with other local Postgres instances)
     volumes:
-      - pgdata:/var/lib/postgresql/data # Persistent volume for Logto database
+      - pgdata:/var/lib/postgresql # Persistent volume for Logto database (Postgres 18+ wants the parent dir)
     restart: unless-stopped
 
   ravendb:
